@@ -1,4 +1,4 @@
-package controllers.dashboard;
+package Views.dashboard;
 
 import java.awt.EventQueue;
 
@@ -80,9 +80,6 @@ public class JFrameDashBoard extends JFrame {
 		
 		JButton jbtnInvoices = new JButton("hoa don ban hang-1");
 		jpanelLeft.add(jbtnInvoices);
-		
-		JButton jbtnReturned = new JButton("Tra Hang-1");
-		jpanelLeft.add(jbtnReturned);
 		
 		JButton jbtnInformManager = new JButton("Thong bao qly -1");
 		jpanelLeft.add(jbtnInformManager);
