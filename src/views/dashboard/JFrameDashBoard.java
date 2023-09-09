@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Views.invoices.jPanelInvoices;
+import Views.Invoices.jPanelInvoices;
 
 import javax.swing.JButton;
 import java.awt.BorderLayout;
@@ -154,6 +154,7 @@ public class JFrameDashBoard extends JFrame {
 
 	public void jbtnInvoices_actionPerformed(ActionEvent e) {
 		clearScreen();
+		
 		jPanelInvoices jpanelInvoices = new jPanelInvoices();
 		jpanelContent.setVisible(true);
 		jpanelContent.add(jpanelInvoices);
