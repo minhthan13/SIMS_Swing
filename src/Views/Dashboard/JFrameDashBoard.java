@@ -1,10 +1,11 @@
 package Views.Dashboard;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Views.Invoices.jPanelInvoices;
+
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.JMenuBar;
@@ -15,11 +16,14 @@ import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class JFrameDashBoard extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField jtextFieldSearch;
+	private JPanel jpanelContent;
 
 	/**
 	 * Launch the application.
@@ -36,7 +40,6 @@ public class JFrameDashBoard extends JFrame {
 			}
 		});
 	}
-
 	public JFrameDashBoard() {
 		setTitle("DASHBOARD");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +70,6 @@ public class JFrameDashBoard extends JFrame {
 		menuBar.add(mnNewMenu_3);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
@@ -77,13 +79,15 @@ public class JFrameDashBoard extends JFrame {
 		
 		JButton jbtnInventory = new JButton("Kho Hang -1,2");
 		jpanelLeft.add(jbtnInventory);
-		
+
 		JButton jbtnInvoices = new JButton("hoa don ban hang-1");
+		jbtnInvoices.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbtnInvoices_actionPerformed(e);
+			}
+		});
 		jpanelLeft.add(jbtnInvoices);
-		
-		JButton jbtnReturned = new JButton("Tra Hang-1");
-		jpanelLeft.add(jbtnReturned);
-		
+
 		JButton jbtnInformManager = new JButton("Thong bao qly -1");
 		jpanelLeft.add(jbtnInformManager);
 		
@@ -120,11 +124,13 @@ public class JFrameDashBoard extends JFrame {
 		JPanel panel = new JPanel();
 		jpanelLeft.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		
+
 		JPanel jpanelContent = new JPanel();
+		jpanelContent = new JPanel();
 		contentPane.add(jpanelContent, BorderLayout.CENTER);
 		jpanelContent.setLayout(new BoxLayout(jpanelContent, BoxLayout.X_AXIS));
-		
+		jpanelContent.setLayout(new BorderLayout(0, 0));
+
 		JPanel jpanelTop = new JPanel();
 		contentPane.add(jpanelTop, BorderLayout.NORTH);
 		jpanelTop.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -141,11 +147,22 @@ public class JFrameDashBoard extends JFrame {
 		
 		JComboBox jcomboBoxCategory = new JComboBox();
 		jpanelTop.add(jcomboBoxCategory);
-		
+
+	}
+
+	public void jbtnInvoices_actionPerformed(ActionEvent e) {
+		clearScreen();
+		jPanelInvoices jpanelInvoices = new jPanelInvoices();
+		jpanelContent.setVisible(true);
+		jpanelContent.add(jpanelInvoices);
 	}
 
 	private void init() {
-		
+
 	}
-	
+
+	private void clearScreen() {
+		jpanelContent.removeAll();
+		jpanelContent.revalidate();
+	}
 }
