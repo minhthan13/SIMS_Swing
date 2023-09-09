@@ -21,6 +21,9 @@ import javax.swing.SwingConstants;
 import Models.Auth.EmailModel;
 import Models.Auth.PasswordShowHide;
 import Models.Auth.SendMailModel;
+import Models.Auth.Validation.InputValidator;
+import Models.Auth.Validation.SetFocusBorder;
+
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -122,7 +125,12 @@ public class JPanelForgotPassword extends JPanel {
 		jIconCheckCode.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				jIconCheckCode_mouseClicked(e);
+				if(!InputValidator.isValidEmail(jtextFieldEmail.getText())) {
+					jIconCheckCode_mouseClicked(e);
+				}else {
+					InputValidator.showErrorMessage(null,"Incorrect Username format");
+					return;
+				}
 			}
 		});
 		jIconCheckCode.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -193,6 +201,12 @@ public class JPanelForgotPassword extends JPanel {
 		JPanel Bottom_Fix = new JPanel();
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
+		// set border input
+		SetFocusBorder.addFocusBorder(jtextFieldEmail);
+		SetFocusBorder.addFocusBorder(jtextFieldCode);
+		
+		SetFocusBorder.addFocusBorderPassword(JpanelNewPassword.getPasswordField());
+		SetFocusBorder.addFocusBorderPassword(JLayoutConfirmPassword.getPasswordField());
 	}
 
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
@@ -203,9 +217,9 @@ public class JPanelForgotPassword extends JPanel {
 			String verifyCodeString = employees.getToken();
 			jtextFieldEmail.setEditable(false);
 			SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
-			JOptionPane.showMessageDialog(this, "Please Check Email Confirm Verify Code !","Message",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !","Message",JOptionPane.INFORMATION_MESSAGE);
 		}else {
-			JOptionPane.showMessageDialog(this, "The account is incorrect or does not exist !","Failed",JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !","Failed",JOptionPane.WARNING_MESSAGE);
 		}
 		
 	}
@@ -220,7 +234,7 @@ public class JPanelForgotPassword extends JPanel {
 			JpanelNewPassword.getPasswordField().setEditable(true);
 			JLayoutConfirmPassword.getPasswordField().setEditable(true);
 		}else {
-			JOptionPane.showMessageDialog(this, "Invalid Verify Code !!","Failed",JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Invalid Verify Code !!","Failed",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -230,14 +244,14 @@ public class JPanelForgotPassword extends JPanel {
 		String emailString = jtextFieldEmail.getText();
 		EmailModel emailModel = new EmailModel();
 		if ( !NewPassword.equals(Confirm)) {
-			JOptionPane.showMessageDialog(this, "New Password & Confirm Password Do Not Match !!!");
+			JOptionPane.showMessageDialog(null, "New Password & Confirm Password Do Not Match !!!");
 			return;
 		}else {
 			if(emailModel.ChangePasswordByEmail(emailString, NewPassword)) {
-				JOptionPane.showMessageDialog(this, "Reset Password Success, Please Try Login !!!","Success",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Reset Password Success, Please Try Login !!!","Success",JOptionPane.INFORMATION_MESSAGE);
 				clearScreenGoLogin();
 			}else {
-				JOptionPane.showMessageDialog(this, "Reset Password Failed, Please Try Again !!!","Failed",JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Reset Password Failed, Please Try Again !!!","Failed",JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		

@@ -20,6 +20,8 @@ import javax.swing.SwingConstants;
 
 import Models.Auth.EmailModel;
 import Models.Auth.SendMailModel;
+import Models.Auth.Validation.SetFocusBorder;
+
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -152,6 +154,9 @@ public class JPanelVerifyEmail extends JPanel {
 		JPanel Bottom_Fix = new JPanel();
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
+		// set border input
+		SetFocusBorder.addFocusBorder(jtextFieldEmail);
+		SetFocusBorder.addFocusBorder(jtextFieldCode);
 	}
 
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
