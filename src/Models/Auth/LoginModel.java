@@ -6,16 +6,17 @@ import java.sql.ResultSet;
 import org.mindrot.jbcrypt.BCrypt;
 
 import Entities.Employees;
-import Models.DBConnect;
+import Models.ConnectDB;
 
 
 public class LoginModel {
-	public Employees Login(String username, String password) {
+	public Employees Login(String usernameOrEmail, String password) {
 		Employees employee = null;
 		try {
-			PreparedStatement preparedStatement = DBConnect.connection()
-					.prepareStatement("select * from employees where username =?");
-			preparedStatement.setString(1, username);
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("select * from employees where username =? or email=?");
+			preparedStatement.setString(1, usernameOrEmail);
+			preparedStatement.setString(2, usernameOrEmail);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -35,7 +36,7 @@ public class LoginModel {
 			e.printStackTrace();
 			employee = null;
 		} finally {
-			DBConnect.disconnect();
+			ConnectDB.disconnect();
 		}
 		return employee;
 

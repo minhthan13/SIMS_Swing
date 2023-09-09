@@ -2,7 +2,7 @@ package Models;
 
 import java.sql.*;
 
-public class DBConnect {
+public class ConnectDB {
 
 	private static Connection connection;
 

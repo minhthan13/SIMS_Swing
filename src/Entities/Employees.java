@@ -11,6 +11,7 @@ public class Employees {
 	private String address;
 	private byte[] image;
 	private boolean status;
+	private String token;
 	private int position_id;
 	private Date start_working;
 
@@ -19,7 +20,7 @@ public class Employees {
 	}
 
 	public Employees(int employee_id, String username, String password, String email, String tel, String address,
-			byte[] image, boolean status, int position_id, Date start_working) {
+			byte[] image, boolean status, String token, int position_id, Date start_working) {
 		super();
 		this.employee_id = employee_id;
 		this.username = username;
@@ -29,8 +30,17 @@ public class Employees {
 		this.address = address;
 		this.image = image;
 		this.status = status;
+		this.token = token;
 		this.position_id = position_id;
 		this.start_working = start_working;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public int getEmployee_id() {
