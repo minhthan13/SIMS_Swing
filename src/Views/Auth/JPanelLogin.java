@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,8 +27,11 @@ import Models.Auth.LoginModel;
 import Models.Auth.PasswordShowHide;
 import Models.Auth.Validation.InputValidator;
 import Models.Auth.Validation.SetFocusBorder;
+import Models.CSS.StyleColor;
 import Views.Index;
 import Views.Dashboard.JFrameDashBoard;
+
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 
@@ -37,23 +41,29 @@ public class JPanelLogin extends JPanel {
 	private JTextField jtextFieldUsername;
 
 	private JFrame parentFrame;
-
+	
+	private String BtnNoBG = "#f7d794";
 	/**
 	 * Create the panel.
 	 */
 	public JPanelLogin() {
-
+		setOpaque(false);
+		
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
+		
+        
 		JPanel Top_Fix = new JPanel();
+		Top_Fix.setOpaque(false);
 		add(Top_Fix);
 		Top_Fix.setLayout(new BorderLayout(0, 0));
-
+		
 		JPanel jpanelForm = new JPanel();
+		jpanelForm.setOpaque(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
 
 		JLabel jlabelLogin = new JLabel("Login");
+		
 		jlabelLogin.setMinimumSize(new Dimension(300, 60));
 		jlabelLogin.setMaximumSize(new Dimension(300, 60));
 		jlabelLogin.setPreferredSize(new Dimension(300, 80));
@@ -63,10 +73,12 @@ public class JPanelLogin extends JPanel {
 		jpanelForm.add(jlabelLogin);
 
 		JPanel jpanelFormLogin = new JPanel();
+		jpanelFormLogin.setOpaque(false);
 		jpanelForm.add(jpanelFormLogin);
 		jpanelFormLogin.setLayout(new BoxLayout(jpanelFormLogin, BoxLayout.PAGE_AXIS));
 
 		JPanel jpanelUsername = new JPanel();
+		jpanelUsername.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) jpanelUsername.getLayout();
 		jpanelFormLogin.add(jpanelUsername);
 
@@ -79,6 +91,7 @@ public class JPanelLogin extends JPanel {
 		jpanelUsername.add(lblNewLabel);
 
 		JPanel jpanelTextField = new JPanel();
+		jpanelTextField.setOpaque(false);
 		jpanelTextField.setPreferredSize(new Dimension(260, 25));
 		jpanelUsername.add(jpanelTextField);
 		jpanelTextField.setLayout(new BoxLayout(jpanelTextField, BoxLayout.LINE_AXIS));
@@ -92,6 +105,7 @@ public class JPanelLogin extends JPanel {
 		jpanelTextField.add(fix);
 
 		JPanel jpanelPassword = new JPanel();
+		jpanelPassword.setOpaque(false);
 		jpanelFormLogin.add(jpanelPassword);
 
 		JLabel lblNewLabel_1 = new JLabel("Password:");
@@ -99,6 +113,7 @@ public class JPanelLogin extends JPanel {
 		lblNewLabel_1.setPreferredSize(new Dimension(80, 30));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		jpanelPassword.add(lblNewLabel_1);
+		passwordShowHide.setOpaque(false);
 
 //		add jpassword and show/hide logic
 		passwordShowHide.setPreferredSize(new Dimension(260, 25));
@@ -106,14 +121,17 @@ public class JPanelLogin extends JPanel {
 		jpanelPassword.add(passwordShowHide);
 
 		JPanel jpanelLabelVerify = new JPanel();
+		jpanelLabelVerify.setOpaque(false);
 		jpanelFormLogin.add(jpanelLabelVerify);
 		jpanelLabelVerify.setLayout(new BoxLayout(jpanelLabelVerify, BoxLayout.X_AXIS));
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
 		jpanelLabelVerify.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JButton jbtnVerifyAccount = new JButton("Verify Account ?");
+		jbtnVerifyAccount.setOpaque(false);
 		jbtnVerifyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnVerifyAccount_actionPerformed(e);
@@ -131,6 +149,7 @@ public class JPanelLogin extends JPanel {
 		jpanelLabelVerify.add(jbtnVerifyAccount);
 
 		JButton jbtnForgotPassword = new JButton("Forgot Password ?");
+		jbtnForgotPassword.setOpaque(false);
 		jbtnForgotPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnForgotPassword_actionPerformed(e);
@@ -148,10 +167,12 @@ public class JPanelLogin extends JPanel {
 		jpanelLabelVerify.add(jbtnForgotPassword);
 
 		JPanel panel = new JPanel();
+		panel.setOpaque(false);
 		jpanelLabelVerify.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelButton = new JPanel();
+		jpanelButton.setOpaque(false);
 		jpanelButton.setBorder(new EmptyBorder(1, 0, 0, 0));
 		FlowLayout flowLayout_2 = (FlowLayout) jpanelButton.getLayout();
 		flowLayout_2.setVgap(10);
@@ -181,6 +202,7 @@ public class JPanelLogin extends JPanel {
 		jpanelButton.add(jbtnRegister);
 
 		JPanel Bottom_Fix = new JPanel();
+		Bottom_Fix.setOpaque(false);
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
 
@@ -188,6 +210,23 @@ public class JPanelLogin extends JPanel {
 
 		SetFocusBorder.addFocusBorder(jtextFieldUsername);
 		SetFocusBorder.addFocusBorderPassword(passwordShowHide.getPasswordField());
+		
+		//set Style color
+		setBackground(StyleColor.FormColor());
+//		
+		jlabelLogin.setForeground(StyleColor.TitleColor());
+		lblNewLabel.setForeground(StyleColor.TitleColor());
+		lblNewLabel_1.setForeground(StyleColor.TitleColor());
+		
+		jbtnVerifyAccount.setForeground(StyleColor.btnNoBacground());
+		jbtnVerifyAccount.setRolloverEnabled(false);
+		jbtnForgotPassword.setForeground(StyleColor.btnNoBacground());
+		jbtnForgotPassword.setRolloverEnabled(false);
+		
+		jbtnLogin.setBackground(StyleColor.BtnBackground());
+		jbtnLogin.setRolloverEnabled(false);
+		jbtnRegister.setBackground(StyleColor.BtnBackground());
+		jbtnRegister.setRolloverEnabled(false);
 	}
 
 	public JPanelLogin(Index parentFrame) {
@@ -252,5 +291,6 @@ public class JPanelLogin extends JPanel {
 		removeAll();
 		revalidate();
 		repaint();
+		this.setOpaque(false);
 	}
 }

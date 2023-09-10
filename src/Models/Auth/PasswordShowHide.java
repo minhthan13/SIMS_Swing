@@ -1,9 +1,12 @@
 package Models.Auth;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class PasswordShowHide extends JPanel {
 	private JPasswordField passwordField;
@@ -19,12 +22,15 @@ public class PasswordShowHide extends JPanel {
 		this.passwordVisible = false;
 		this.showIcon = resizeIcon(new ImageIcon("src/Resources/Icons/Show.png"), 24, 24);
 		this.hideIcon = resizeIcon(new ImageIcon("src/Resources/Icons/Hide.png"), 24, 24);
+		
 		this.toggleButton = new JButton(showIcon);
 		
 		toggleButton.setPreferredSize(new Dimension(30, 25));
 		toggleButton.setBorderPainted(false);
 		toggleButton.setFocusPainted(false);
 		toggleButton.setContentAreaFilled(false);
+//		toggleButton.setRolloverEnabled(false);
+		
 		toggleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		toggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -41,9 +47,11 @@ public class PasswordShowHide extends JPanel {
 		if (passwordVisible) {
 			passwordField.setEchoChar((char) 0); 
 			toggleButton.setIcon(hideIcon);
+			toggleButton.setRolloverEnabled(false);
 		} else {
 			passwordField.setEchoChar('*'); 
 			toggleButton.setIcon(showIcon);
+			toggleButton.setRolloverEnabled(false);
 		}
 	}
 
@@ -56,10 +64,13 @@ public class PasswordShowHide extends JPanel {
 
 	private Icon resizeIcon(Icon icon, int width, int height) {
 		if (icon instanceof ImageIcon) {
+			
 			ImageIcon imageIcon = (ImageIcon) icon;
 			Image image = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			
 			return new ImageIcon(image);
 		}
 		return icon;
 	}
+	
 }

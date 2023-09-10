@@ -40,9 +40,13 @@ import Models.Auth.RegisterModel;
 import Models.Auth.SendMailModel;
 import Models.Auth.Validation.InputValidator;
 import Models.Auth.Validation.SetFocusBorder;
+import Models.CSS.StyleColor;
 import Models.Positions.PositionModel;
+import Views.Index;
 
 import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
 
 public class JPanelRegister extends JPanel {
 	private JTextField jtextFieldUsername;
@@ -54,6 +58,7 @@ public class JPanelRegister extends JPanel {
 	private JTextField jtextFieldAddress;
 	private File selectedFile = null;
 	private JLabel jlabelImage;
+	private Index parentFrame;
 
 	/**
 	 * Create the panel.
@@ -63,10 +68,12 @@ public class JPanelRegister extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		JPanel Top_Fix = new JPanel();
+		Top_Fix.setOpaque(false);
 		add(Top_Fix);
 		Top_Fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelForm = new JPanel();
+		jpanelForm.setOpaque(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
 
@@ -80,23 +87,29 @@ public class JPanelRegister extends JPanel {
 		jpanelForm.add(jlabelRegister);
 
 		JPanel jpanelFormRegister = new JPanel();
+		jpanelFormRegister.setOpaque(false);
 		jpanelForm.add(jpanelFormRegister);
 		jpanelFormRegister.setLayout(new BorderLayout(20, 15));
 
 		JPanel Left_Fix = new JPanel();
+		Left_Fix.setOpaque(false);
 		Left_Fix.setSize(new Dimension(10, 0));
 		jpanelFormRegister.add(Left_Fix, BorderLayout.WEST);
 		Left_Fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel Center_Content = new JPanel();
+		Center_Content.setOpaque(false);
 		jpanelFormRegister.add(Center_Content, BorderLayout.CENTER);
 		Center_Content.setLayout(new BoxLayout(Center_Content, BoxLayout.LINE_AXIS));
 
 		JPanel Left_Form = new JPanel();
+		Left_Form.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 5), new MatteBorder(0, 0, 0, 3, (Color) new Color(204, 255, 255))));
+		Left_Form.setOpaque(false);
 		Center_Content.add(Left_Form);
 		Left_Form.setLayout(new BoxLayout(Left_Form, BoxLayout.PAGE_AXIS));
 
 		JPanel jpanelUsername = new JPanel();
+		jpanelUsername.setOpaque(false);
 		Left_Form.add(jpanelUsername);
 		jpanelUsername.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -105,23 +118,26 @@ public class JPanelRegister extends JPanel {
 		jpanelUsername.add(lblNewLabel_1);
 
 		JPanel jpanelLabel = new JPanel();
+		jpanelLabel.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) jpanelLabel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		jpanelLabel.setPreferredSize(new Dimension(140, 25));
 		jpanelUsername.add(jpanelLabel);
 
-		JLabel lblNewLabel = new JLabel("Username:");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setAlignmentX(0.5f);
-		jpanelLabel.add(lblNewLabel);
+		JLabel labelUsername = new JLabel("Username:");
+		labelUsername.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelUsername.setHorizontalAlignment(SwingConstants.LEFT);
+		labelUsername.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelUsername.setAlignmentX(0.5f);
+		jpanelLabel.add(labelUsername);
 
 		JLabel lblNewLabel_2 = new JLabel("*");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2.setForeground(new Color(255, 0, 0));
 		jpanelLabel.add(lblNewLabel_2);
 
 		JPanel jpanelTextUsername = new JPanel();
+		jpanelTextUsername.setOpaque(false);
 		jpanelTextUsername.setPreferredSize(new Dimension(200, 25));
 		jpanelUsername.add(jpanelTextUsername);
 		jpanelTextUsername.setLayout(new BoxLayout(jpanelTextUsername, BoxLayout.X_AXIS));
@@ -135,6 +151,7 @@ public class JPanelRegister extends JPanel {
 		jpanelUsername.add(lblNewLabel_1_2);
 
 		JPanel jpanelPassword = new JPanel();
+		jpanelPassword.setOpaque(false);
 		Left_Form.add(jpanelPassword);
 
 		JLabel lblNewLabel_3 = new JLabel("");
@@ -142,23 +159,26 @@ public class JPanelRegister extends JPanel {
 		jpanelPassword.add(lblNewLabel_3);
 
 		JPanel jpanelLabel2 = new JPanel();
+		jpanelLabel2.setOpaque(false);
 		jpanelLabel2.setPreferredSize(new Dimension(140, 25));
 		FlowLayout flowLayout_1 = (FlowLayout) jpanelLabel2.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		jpanelPassword.add(jpanelLabel2);
 
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPassword.setAlignmentX(0.5f);
-		jpanelLabel2.add(lblPassword);
+		JLabel labelPassword = new JLabel("Password:");
+		labelPassword.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelPassword.setHorizontalAlignment(SwingConstants.LEFT);
+		labelPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelPassword.setAlignmentX(0.5f);
+		jpanelLabel2.add(labelPassword);
 
 		JLabel lblNewLabel_2_1 = new JLabel("*");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2_1.setForeground(Color.RED);
 		jpanelLabel2.add(lblNewLabel_2_1);
 
 		JPanel jpanelPass = new JPanel();
+		jpanelPass.setOpaque(false);
 		jpanelPass.setPreferredSize(new Dimension(200, 25));
 		jpanelPassword.add(jpanelPass);
 		jpanelPass.setLayout(new BoxLayout(jpanelPass, BoxLayout.X_AXIS));
@@ -172,6 +192,7 @@ public class JPanelRegister extends JPanel {
 		jpanelPassword.add(lblNewLabel_1_3);
 
 		JPanel jpanelConfirmPass = new JPanel();
+		jpanelConfirmPass.setOpaque(false);
 		Left_Form.add(jpanelConfirmPass);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("");
@@ -179,23 +200,26 @@ public class JPanelRegister extends JPanel {
 		jpanelConfirmPass.add(lblNewLabel_1_1_1);
 
 		JPanel jpanelLabel2_1 = new JPanel();
+		jpanelLabel2_1.setOpaque(false);
 		FlowLayout flowLayout_3 = (FlowLayout) jpanelLabel2_1.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		jpanelLabel2_1.setPreferredSize(new Dimension(140, 25));
 		jpanelConfirmPass.add(jpanelLabel2_1);
 
-		JLabel lblConfirmPassword = new JLabel("Confirm Password:");
-		lblConfirmPassword.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
-		lblConfirmPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblConfirmPassword.setAlignmentX(0.5f);
-		jpanelLabel2_1.add(lblConfirmPassword);
+		JLabel labelConfirmPassword = new JLabel("Confirm Password:");
+		labelConfirmPassword.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
+		labelConfirmPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelConfirmPassword.setAlignmentX(0.5f);
+		jpanelLabel2_1.add(labelConfirmPassword);
 
 		JLabel lblNewLabel_2_1_1 = new JLabel("*");
+		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2_1_1.setForeground(Color.RED);
 		jpanelLabel2_1.add(lblNewLabel_2_1_1);
 
 		JPanel jpanelConfirm = new JPanel();
+		jpanelConfirm.setOpaque(false);
 		jpanelConfirm.setPreferredSize(new Dimension(200, 25));
 		jpanelConfirmPass.add(jpanelConfirm);
 		jpanelConfirm.setLayout(new BoxLayout(jpanelConfirm, BoxLayout.X_AXIS));
@@ -209,6 +233,7 @@ public class JPanelRegister extends JPanel {
 		jpanelConfirmPass.add(lblNewLabel_1_4);
 
 		JPanel jpanelEmail = new JPanel();
+		jpanelEmail.setOpaque(false);
 		Left_Form.add(jpanelEmail);
 
 		JLabel lblNewLabel_1_1 = new JLabel("");
@@ -216,23 +241,26 @@ public class JPanelRegister extends JPanel {
 		jpanelEmail.add(lblNewLabel_1_1);
 
 		JPanel jpanelLabel2_1_1 = new JPanel();
+		jpanelLabel2_1_1.setOpaque(false);
 		FlowLayout flowLayout_4 = (FlowLayout) jpanelLabel2_1_1.getLayout();
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		jpanelLabel2_1_1.setPreferredSize(new Dimension(140, 25));
 		jpanelEmail.add(jpanelLabel2_1_1);
 
-		JLabel lbla = new JLabel("Email:");
-		lbla.setHorizontalTextPosition(SwingConstants.CENTER);
-		lbla.setHorizontalAlignment(SwingConstants.LEFT);
-		lbla.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbla.setAlignmentX(0.5f);
-		jpanelLabel2_1_1.add(lbla);
+		JLabel labelEmail = new JLabel("Email:");
+		labelEmail.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		labelEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelEmail.setAlignmentX(0.5f);
+		jpanelLabel2_1_1.add(labelEmail);
 
 		JLabel lblNewLabel_2_1_1_1 = new JLabel("*");
+		lblNewLabel_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2_1_1_1.setForeground(Color.RED);
 		jpanelLabel2_1_1.add(lblNewLabel_2_1_1_1);
 
 		JPanel jpanelMail = new JPanel();
+		jpanelMail.setOpaque(false);
 		jpanelMail.setPreferredSize(new Dimension(200, 25));
 		jpanelEmail.add(jpanelMail);
 		jpanelMail.setLayout(new BoxLayout(jpanelMail, BoxLayout.X_AXIS));
@@ -246,11 +274,13 @@ public class JPanelRegister extends JPanel {
 		jpanelEmail.add(lblNewLabel_1_5);
 
 		JPanel Right_Form = new JPanel();
-		Right_Form.setBorder(new MatteBorder(0, 2, 0, 0, (Color) new Color(30, 144, 255)));
+		Right_Form.setBorder(new EmptyBorder(0, 10, 0, 0));
+		Right_Form.setOpaque(false);
 		Center_Content.add(Right_Form);
 		Right_Form.setLayout(new BoxLayout(Right_Form, BoxLayout.PAGE_AXIS));
 
 		JPanel jpanelPosition = new JPanel();
+		jpanelPosition.setOpaque(false);
 		Right_Form.add(jpanelPosition);
 		jpanelPosition.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
@@ -259,22 +289,25 @@ public class JPanelRegister extends JPanel {
 		jpanelPosition.add(lblNewLabel_1_1_2);
 
 		JPanel jpanelLabel2_1_1_1 = new JPanel();
+		jpanelLabel2_1_1_1.setOpaque(false);
 		jpanelLabel2_1_1_1.setPreferredSize(new Dimension(100, 25));
 		jpanelPosition.add(jpanelLabel2_1_1_1);
 		jpanelLabel2_1_1_1.setLayout(new BoxLayout(jpanelLabel2_1_1_1, BoxLayout.X_AXIS));
 
-		JLabel lbla_1 = new JLabel("Position");
-		lbla_1.setHorizontalTextPosition(SwingConstants.CENTER);
-		lbla_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lbla_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbla_1.setAlignmentX(0.5f);
-		jpanelLabel2_1_1_1.add(lbla_1);
+		JLabel labelPositions = new JLabel("Position:");
+		labelPositions.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelPositions.setHorizontalAlignment(SwingConstants.LEFT);
+		labelPositions.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelPositions.setAlignmentX(0.5f);
+		jpanelLabel2_1_1_1.add(labelPositions);
 
 		JLabel lblNewLabel_2_1_1_1_1 = new JLabel("*");
+		lblNewLabel_2_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2_1_1_1_1.setForeground(Color.RED);
 		jpanelLabel2_1_1_1.add(lblNewLabel_2_1_1_1_1);
 
 		JPanel JPanelComboBox = new JPanel();
+		JPanelComboBox.setOpaque(false);
 		JPanelComboBox.setPreferredSize(new Dimension(220, 25));
 		jpanelPosition.add(JPanelComboBox);
 		JPanelComboBox.setLayout(new BoxLayout(JPanelComboBox, BoxLayout.X_AXIS));
@@ -283,6 +316,7 @@ public class JPanelRegister extends JPanel {
 		JPanelComboBox.add(jcomboBoxPositions);
 
 		JPanel jpanelTelephone = new JPanel();
+		jpanelTelephone.setOpaque(false);
 		Right_Form.add(jpanelTelephone);
 		jpanelTelephone.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
@@ -291,22 +325,25 @@ public class JPanelRegister extends JPanel {
 		jpanelTelephone.add(lblNewLabel_1_1_2_1);
 
 		JPanel jpanelLabel2_1_1_1_1 = new JPanel();
+		jpanelLabel2_1_1_1_1.setOpaque(false);
 		jpanelLabel2_1_1_1_1.setPreferredSize(new Dimension(100, 25));
 		jpanelTelephone.add(jpanelLabel2_1_1_1_1);
 		jpanelLabel2_1_1_1_1.setLayout(new BoxLayout(jpanelLabel2_1_1_1_1, BoxLayout.X_AXIS));
 
-		JLabel lbla_1_1 = new JLabel("Telephone:");
-		lbla_1_1.setHorizontalTextPosition(SwingConstants.CENTER);
-		lbla_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lbla_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbla_1_1.setAlignmentX(0.5f);
-		jpanelLabel2_1_1_1_1.add(lbla_1_1);
+		JLabel labelTelephone = new JLabel("Telephone:");
+		labelTelephone.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelTelephone.setHorizontalAlignment(SwingConstants.LEFT);
+		labelTelephone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelTelephone.setAlignmentX(0.5f);
+		jpanelLabel2_1_1_1_1.add(labelTelephone);
 
 		JLabel lblNewLabel_2_1_1_1_1_1 = new JLabel("*");
+		lblNewLabel_2_1_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2_1_1_1_1_1.setForeground(Color.RED);
 		jpanelLabel2_1_1_1_1.add(lblNewLabel_2_1_1_1_1_1);
 
 		JPanel jpanelTextPhone = new JPanel();
+		jpanelTextPhone.setOpaque(false);
 		jpanelTextPhone.setPreferredSize(new Dimension(220, 25));
 		jpanelTelephone.add(jpanelTextPhone);
 		jpanelTextPhone.setLayout(new BoxLayout(jpanelTextPhone, BoxLayout.X_AXIS));
@@ -316,6 +353,7 @@ public class JPanelRegister extends JPanel {
 		jtextFieldTel.setColumns(10);
 
 		JPanel jpanelAddress = new JPanel();
+		jpanelAddress.setOpaque(false);
 		FlowLayout flowLayout_6 = (FlowLayout) jpanelAddress.getLayout();
 		flowLayout_6.setAlignment(FlowLayout.LEFT);
 		Right_Form.add(jpanelAddress);
@@ -325,22 +363,25 @@ public class JPanelRegister extends JPanel {
 		jpanelAddress.add(lblNewLabel_1_1_2_1_1);
 
 		JPanel jpanellabel = new JPanel();
+		jpanellabel.setOpaque(false);
 		jpanellabel.setPreferredSize(new Dimension(100, 25));
 		jpanelAddress.add(jpanellabel);
 		jpanellabel.setLayout(new BoxLayout(jpanellabel, BoxLayout.X_AXIS));
 
-		JLabel lbla_1_1_1 = new JLabel("Address:");
-		lbla_1_1_1.setHorizontalTextPosition(SwingConstants.CENTER);
-		lbla_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lbla_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbla_1_1_1.setAlignmentX(0.5f);
-		jpanellabel.add(lbla_1_1_1);
+		JLabel labelAddress = new JLabel("Address:");
+		labelAddress.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelAddress.setHorizontalAlignment(SwingConstants.LEFT);
+		labelAddress.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelAddress.setAlignmentX(0.5f);
+		jpanellabel.add(labelAddress);
 
 		JLabel lblNewLabel_2_1_1_1_1_1_1 = new JLabel("*");
+		lblNewLabel_2_1_1_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_2_1_1_1_1_1_1.setForeground(Color.RED);
 		jpanellabel.add(lblNewLabel_2_1_1_1_1_1_1);
 
 		JPanel jpanelTextAddress = new JPanel();
+		jpanelTextAddress.setOpaque(false);
 		jpanelTextAddress.setPreferredSize(new Dimension(220, 25));
 		jpanelAddress.add(jpanelTextAddress);
 		jpanelTextAddress.setLayout(new BoxLayout(jpanelTextAddress, BoxLayout.X_AXIS));
@@ -350,6 +391,7 @@ public class JPanelRegister extends JPanel {
 		jtextFieldAddress.setColumns(10);
 
 		JPanel jpanelImage = new JPanel();
+		jpanelImage.setOpaque(false);
 		FlowLayout flowLayout_7 = (FlowLayout) jpanelImage.getLayout();
 		flowLayout_7.setAlignment(FlowLayout.LEFT);
 		Right_Form.add(jpanelImage);
@@ -359,18 +401,19 @@ public class JPanelRegister extends JPanel {
 		jpanelImage.add(lblNewLabel_1_1_2_1_1_1);
 
 		JPanel jPanelLabel = new JPanel();
+		jPanelLabel.setOpaque(false);
 		jPanelLabel.setPreferredSize(new Dimension(100, 120));
 		jpanelImage.add(jPanelLabel);
 		jPanelLabel.setLayout(new BoxLayout(jPanelLabel, BoxLayout.PAGE_AXIS));
 
-		JLabel lbla_1_1_1_1 = new JLabel("Image:");
-		lbla_1_1_1_1.setMaximumSize(new Dimension(120, 25));
-		lbla_1_1_1_1.setPreferredSize(new Dimension(100, 14));
-		lbla_1_1_1_1.setHorizontalTextPosition(SwingConstants.CENTER);
-		lbla_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lbla_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbla_1_1_1_1.setAlignmentX(0.5f);
-		jPanelLabel.add(lbla_1_1_1_1);
+		JLabel labelImage = new JLabel("Image:");
+		labelImage.setMaximumSize(new Dimension(120, 25));
+		labelImage.setPreferredSize(new Dimension(100, 14));
+		labelImage.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelImage.setHorizontalAlignment(SwingConstants.LEFT);
+		labelImage.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelImage.setAlignmentX(0.5f);
+		jPanelLabel.add(labelImage);
 
 		JButton jbtnBrowse = new JButton("Browse");
 		jbtnBrowse.addActionListener(new ActionListener() {
@@ -381,7 +424,7 @@ public class JPanelRegister extends JPanel {
 		});
 
 		jlabelImage = new JLabel("");
-		jlabelImage.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jlabelImage.setBorder(new LineBorder(new Color(255, 255, 204)));
 		jlabelImage.setSize(new Dimension(120, 120));
 		jlabelImage.setPreferredSize(new Dimension(120, 120));
 		jpanelImage.add(jlabelImage);
@@ -396,10 +439,12 @@ public class JPanelRegister extends JPanel {
 		jpanelImage.add(jbtnBrowse);
 
 		JPanel Rigth_fix = new JPanel();
+		Rigth_fix.setOpaque(false);
 		jpanelFormRegister.add(Rigth_fix, BorderLayout.EAST);
 		Rigth_fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelButton = new JPanel();
+		jpanelButton.setOpaque(false);
 		FlowLayout flowLayout_2 = (FlowLayout) jpanelButton.getLayout();
 		flowLayout_2.setVgap(10);
 		flowLayout_2.setHgap(10);
@@ -428,6 +473,7 @@ public class JPanelRegister extends JPanel {
 		jpanelButton.add(jbtnCancel);
 
 		JPanel Bottom_Fix = new JPanel();
+		Bottom_Fix.setOpaque(false);
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
 
@@ -439,6 +485,27 @@ public class JPanelRegister extends JPanel {
 		SetFocusBorder.addFocusBorder(jtextFieldEmail);
 		SetFocusBorder.addFocusBorder(jtextFieldTel);
 		SetFocusBorder.addFocusBorder(jtextFieldAddress);
+		
+		// set color
+		setBackground(StyleColor.FormColor());
+		//set label color
+		jlabelRegister.setForeground(StyleColor.TitleColor());
+		labelUsername.setForeground(StyleColor.TitleColor());
+		labelPassword.setForeground(StyleColor.TitleColor());
+		labelConfirmPassword.setForeground(StyleColor.TitleColor());
+		labelAddress.setForeground(StyleColor.TitleColor());
+		labelEmail.setForeground(StyleColor.TitleColor());
+		labelPositions.setForeground(StyleColor.TitleColor());
+		labelImage.setForeground(StyleColor.TitleColor());
+		labelTelephone.setForeground(StyleColor.TitleColor());
+		//btn color 
+		jbtnBrowse.setForeground(StyleColor.btnNoBacground());
+		jbtnBrowse.setRolloverEnabled(false);
+		jbtnRegister.setBackground(StyleColor.BtnBackground());
+		jbtnRegister.setRolloverEnabled(false);
+		jbtnCancel.setBackground(StyleColor.BtnBackground());
+		jbtnCancel.setRolloverEnabled(false);
+		
 		
 	}
 
@@ -485,6 +552,7 @@ public class JPanelRegister extends JPanel {
 				} else {
 					ClearScreen();
 					JPanelLogin jLogin = new JPanelLogin();
+			
 					add(jLogin);
 					jLogin.setVisible(true);
 				}
@@ -497,10 +565,11 @@ public class JPanelRegister extends JPanel {
 	}
 
 	public void jbtnCancel_actionPerformed(ActionEvent e) {
-		JPanelLogin jLogin = new JPanelLogin();
 		ClearScreen();
+		JPanelLogin jLogin = new JPanelLogin();
 		add(jLogin);
 		jLogin.setVisible(true);
+		
 	}
 
 	public void jbtnBrowse_actionPerformed(ActionEvent e) {
@@ -563,6 +632,7 @@ public class JPanelRegister extends JPanel {
 	private void ClearScreen() {
 		removeAll();
 		revalidate();
+		this.setOpaque(false);
 		repaint();
 	}
 }

@@ -23,6 +23,7 @@ import Models.Auth.PasswordShowHide;
 import Models.Auth.SendMailModel;
 import Models.Auth.Validation.InputValidator;
 import Models.Auth.Validation.SetFocusBorder;
+import Models.CSS.StyleColor;
 
 import javax.swing.border.EmptyBorder;
 
@@ -33,6 +34,7 @@ import Entities.Employees;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class JPanelForgotPassword extends JPanel {
 	private JTextField jtextFieldCode;
@@ -40,6 +42,7 @@ public class JPanelForgotPassword extends JPanel {
 	private JLabel jIconSendMail;
 	private PasswordShowHide JpanelNewPassword = new PasswordShowHide();
 	private PasswordShowHide JLayoutConfirmPassword = new PasswordShowHide();
+
 	/**
 	 * Create the panel.
 	 */
@@ -48,10 +51,12 @@ public class JPanelForgotPassword extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		JPanel Top_Fix = new JPanel();
+		Top_Fix.setOpaque(false);
 		add(Top_Fix);
 		Top_Fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelForm = new JPanel();
+		jpanelForm.setOpaque(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
 
@@ -65,21 +70,24 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelForm.add(jlabelForgot);
 
 		JPanel jpanelFormCode = new JPanel();
+		jpanelFormCode.setOpaque(false);
 		jpanelForm.add(jpanelFormCode);
 		jpanelFormCode.setLayout(new BoxLayout(jpanelFormCode, BoxLayout.PAGE_AXIS));
 
 		JPanel jpanelEmail = new JPanel();
+		jpanelEmail.setOpaque(false);
 		jpanelFormCode.add(jpanelEmail);
 
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setPreferredSize(new Dimension(120, 30));
-		lblEmail.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEmail.setAlignmentX(0.5f);
-		jpanelEmail.add(lblEmail);
+		JLabel labelEmail = new JLabel("Email:");
+		labelEmail.setPreferredSize(new Dimension(120, 30));
+		labelEmail.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		labelEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelEmail.setAlignmentX(0.5f);
+		jpanelEmail.add(labelEmail);
 
 		JPanel jpanelEmailText = new JPanel();
+		jpanelEmailText.setOpaque(false);
 		jpanelEmailText.setPreferredSize(new Dimension(260, 25));
 		jpanelEmail.add(jpanelEmailText);
 		jpanelEmailText.setLayout(new BoxLayout(jpanelEmailText, BoxLayout.X_AXIS));
@@ -102,17 +110,19 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelEmailText.add(jIconSendMail);
 
 		JPanel jpanelVerifyText = new JPanel();
+		jpanelVerifyText.setOpaque(false);
 		jpanelFormCode.add(jpanelVerifyText);
 
-		JLabel lblNewLabel = new JLabel("Verify Code:");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setPreferredSize(new Dimension(120, 30));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jpanelVerifyText.add(lblNewLabel);
+		JLabel labelVerifyCode = new JLabel("Verify Code:");
+		labelVerifyCode.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelVerifyCode.setAlignmentX(Component.CENTER_ALIGNMENT);
+		labelVerifyCode.setHorizontalAlignment(SwingConstants.LEFT);
+		labelVerifyCode.setPreferredSize(new Dimension(120, 30));
+		labelVerifyCode.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		jpanelVerifyText.add(labelVerifyCode);
 
 		JPanel jpanelTextField = new JPanel();
+		jpanelTextField.setOpaque(false);
 		jpanelTextField.setPreferredSize(new Dimension(260, 25));
 		jpanelVerifyText.add(jpanelTextField);
 		jpanelTextField.setLayout(new BoxLayout(jpanelTextField, BoxLayout.LINE_AXIS));
@@ -120,56 +130,65 @@ public class JPanelForgotPassword extends JPanel {
 		jtextFieldCode = new JTextField();
 		jpanelTextField.add(jtextFieldCode);
 		jtextFieldCode.setColumns(16);
-		
+
 		JLabel jIconCheckCode = new JLabel("");
 		jIconCheckCode.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!InputValidator.isValidEmail(jtextFieldEmail.getText())) {
+				if (!InputValidator.isValidEmail(jtextFieldEmail.getText())) {
 					jIconCheckCode_mouseClicked(e);
-				}else {
-					InputValidator.showErrorMessage(null,"Incorrect Username format");
+				} else {
+					InputValidator.showErrorMessage(null, "Incorrect Username format");
 					return;
 				}
 			}
 		});
 		jIconCheckCode.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		jIconCheckCode.setHorizontalAlignment(SwingConstants.CENTER);
-		jIconCheckCode.setIcon(new ImageIcon("D:\\CODE\\JavaSwing_Project\\SIMS\\src\\Resources\\Icons\\Check-icon.png"));
+		jIconCheckCode
+				.setIcon(new ImageIcon("D:\\CODE\\JavaSwing_Project\\SIMS\\src\\Resources\\Icons\\Check-icon.png"));
 		jIconCheckCode.setPreferredSize(new Dimension(33, 25));
 		jpanelTextField.add(jIconCheckCode);
-		
+
 		JPanel jpanelNewPassword = new JPanel();
-		
-		
+		jpanelNewPassword.setOpaque(false);
+
 		jpanelFormCode.add(jpanelNewPassword);
-		
-		JLabel jLabelNewPass = new JLabel("New Password:");
-		jLabelNewPass.setPreferredSize(new Dimension(120, 30));
-		jLabelNewPass.setHorizontalTextPosition(SwingConstants.CENTER);
-		jLabelNewPass.setHorizontalAlignment(SwingConstants.LEFT);
-		jLabelNewPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jLabelNewPass.setAlignmentX(0.5f);
-		jpanelNewPassword.add(jLabelNewPass);
-		JpanelNewPassword.setPreferredSize(new Dimension(255, 25));
+
+		JLabel labelNewPass = new JLabel("New Password:");
+		labelNewPass.setPreferredSize(new Dimension(120, 30));
+		labelNewPass.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelNewPass.setHorizontalAlignment(SwingConstants.LEFT);
+		labelNewPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelNewPass.setAlignmentX(0.5f);
+		jpanelNewPassword.add(labelNewPass);
 		JpanelNewPassword.getPasswordField().setEditable(false);
+		JpanelNewPassword.getPasswordField().setBackground(new Color(204, 204, 204));
+		JpanelNewPassword.getPasswordField().setFocusable(false);
+		JpanelNewPassword.setOpaque(false);
+		JpanelNewPassword.setPreferredSize(new Dimension(255, 25));
 		JpanelNewPassword.getPasswordField().setEchoChar('*');
 		jpanelNewPassword.add(JpanelNewPassword);
 		JPanel jpanelConfirmPassword = new JPanel();
+		jpanelConfirmPassword.setOpaque(false);
 		jpanelFormCode.add(jpanelConfirmPassword);
-		
-		JLabel jLabelComfirm = new JLabel("Confirm Password:");
-		jLabelComfirm.setPreferredSize(new Dimension(120, 30));
-		jLabelComfirm.setHorizontalTextPosition(SwingConstants.CENTER);
-		jLabelComfirm.setHorizontalAlignment(SwingConstants.LEFT);
-		jLabelComfirm.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jLabelComfirm.setAlignmentX(0.5f);
-		jpanelConfirmPassword.add(jLabelComfirm);
-		JLayoutConfirmPassword.setPreferredSize(new Dimension(255, 25));
+
+		JLabel labelConfirm = new JLabel("Confirm Password:");
+		labelConfirm.setPreferredSize(new Dimension(120, 30));
+		labelConfirm.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelConfirm.setHorizontalAlignment(SwingConstants.LEFT);
+		labelConfirm.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelConfirm.setAlignmentX(0.5f);
+		jpanelConfirmPassword.add(labelConfirm);
 		JLayoutConfirmPassword.getPasswordField().setEditable(false);
+		JLayoutConfirmPassword.getPasswordField().setBackground(new Color(204, 204, 204));
+		JLayoutConfirmPassword.getPasswordField().setFocusable(false);
+		JLayoutConfirmPassword.setOpaque(false);
+		JLayoutConfirmPassword.setPreferredSize(new Dimension(255, 25));
 		JLayoutConfirmPassword.getPasswordField().setEchoChar('*');
 		jpanelConfirmPassword.add(JLayoutConfirmPassword);
 		JPanel jpanelButton = new JPanel();
+		jpanelButton.setOpaque(false);
 		jpanelButton.setBorder(new EmptyBorder(1, 0, 0, 0));
 		FlowLayout flowLayout_2 = (FlowLayout) jpanelButton.getLayout();
 		flowLayout_2.setVgap(20);
@@ -199,42 +218,68 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelButton.add(jbtnCancel);
 
 		JPanel Bottom_Fix = new JPanel();
+		Bottom_Fix.setOpaque(false);
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
 		// set border input
 		SetFocusBorder.addFocusBorder(jtextFieldEmail);
 		SetFocusBorder.addFocusBorder(jtextFieldCode);
-		
 		SetFocusBorder.addFocusBorderPassword(JpanelNewPassword.getPasswordField());
 		SetFocusBorder.addFocusBorderPassword(JLayoutConfirmPassword.getPasswordField());
+
+		// set color
+		setBackground(StyleColor.FormColor());
+		// set label color
+		jlabelForgot.setForeground(StyleColor.TitleColor());
+		labelEmail.setForeground(StyleColor.TitleColor());
+		labelVerifyCode.setForeground(StyleColor.TitleColor());
+		labelConfirm.setForeground(StyleColor.TitleColor());
+		labelNewPass.setForeground(StyleColor.TitleColor());
+		// set btn
+		jbtnSave.setBackground(StyleColor.BtnBackground());
+		jbtnSave.setRolloverEnabled(false);
+		jbtnCancel.setBackground(StyleColor.BtnBackground());
+		jbtnCancel.setRolloverEnabled(false);
+
 	}
 
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
 		EmailModel emailModel = new EmailModel();
 		String verifyEmail = jtextFieldEmail.getText();
 		Employees employees = emailModel.FindByEmail(verifyEmail);
-		if(employees != null) {
+		if (employees != null) {
 			String verifyCodeString = employees.getToken();
 			jtextFieldEmail.setEditable(false);
 			SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
-			JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !","Message",JOptionPane.INFORMATION_MESSAGE);
-		}else {
-			JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !","Failed",JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !", "Message",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !", "Failed",
+					JOptionPane.WARNING_MESSAGE);
 		}
-		
+
 	}
-	
+
 	public void jIconCheckCode_mouseClicked(MouseEvent e) {
 		EmailModel emailModel = new EmailModel();
 		Employees employees = emailModel.FindByEmail(jtextFieldEmail.getText());
 		String token = employees.getToken();
 		String validCode = jtextFieldCode.getText();
-		if(token.equals(validCode)) {
+		if (token.equals(validCode)) {
+			jtextFieldEmail.setEditable(false);
+			jtextFieldEmail.setFocusable(true);
+			jtextFieldEmail.setBackground(new Color(204, 204, 204));
 			jtextFieldCode.setEditable(false);
+			jtextFieldCode.setFocusable(true);
+			jtextFieldCode.setBackground(new Color(204, 204, 204));
 			JpanelNewPassword.getPasswordField().setEditable(true);
+			JpanelNewPassword.getPasswordField().setFocusable(true);
+			JpanelNewPassword.getPasswordField().setBackground(new Color(255, 255, 255));
 			JLayoutConfirmPassword.getPasswordField().setEditable(true);
-		}else {
-			JOptionPane.showMessageDialog(null, "Invalid Verify Code !!","Failed",JOptionPane.WARNING_MESSAGE);
+			JLayoutConfirmPassword.getPasswordField().setFocusable(true);
+			JLayoutConfirmPassword.getPasswordField().setBackground(new Color(255, 255, 255));
+		} else {
+			JOptionPane.showMessageDialog(null, "Invalid Verify Code !!", "Failed", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -243,29 +288,31 @@ public class JPanelForgotPassword extends JPanel {
 		String Confirm = JLayoutConfirmPassword.getPasswordAsString();
 		String emailString = jtextFieldEmail.getText();
 		EmailModel emailModel = new EmailModel();
-		if ( !NewPassword.equals(Confirm)) {
+		if (!NewPassword.equals(Confirm)) {
 			JOptionPane.showMessageDialog(null, "New Password & Confirm Password Do Not Match !!!");
 			return;
-		}else {
-			if(emailModel.ChangePasswordByEmail(emailString, NewPassword)) {
-				JOptionPane.showMessageDialog(null, "Reset Password Success, Please Try Login !!!","Success",JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			if (emailModel.ChangePasswordByEmail(emailString, NewPassword)) {
+				JOptionPane.showMessageDialog(null, "Reset Password Success, Please Try Login !!!", "Success",
+						JOptionPane.INFORMATION_MESSAGE);
 				clearScreenGoLogin();
-			}else {
-				JOptionPane.showMessageDialog(null, "Reset Password Failed, Please Try Again !!!","Failed",JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Reset Password Failed, Please Try Again !!!", "Failed",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
-		
-		
+
 	}
 
 	public void jbtnCancel_actionPerformed(ActionEvent e) {
 		clearScreenGoLogin();
-		
+
 	}
 
 	private void clearScreenGoLogin() {
 		removeAll();
 		revalidate();
+		this.setOpaque(false);
 		repaint();
 		JPanelLogin jLogin = new JPanelLogin();
 		add(jLogin);

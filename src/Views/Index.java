@@ -22,7 +22,11 @@ import javax.swing.JOptionPane;
 
 import java.awt.Component;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -45,6 +49,11 @@ public class Index extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -64,35 +73,47 @@ public class Index extends JFrame {
 		setTitle("SIMS");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 921, 590);
-		jpanelMain = new JPanel();
+		jpanelMain = new JPanel() {
+			  protected void paintComponent(Graphics g) {
+	                super.paintComponent(g);
+	                ImageIcon backgroundImage = new ImageIcon("src/Resources/Images/Background-Blue.png"); // Thay đổi đường dẫn đến hình ảnh của bạn
+	                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), null);
+	            }
+		};
 		jpanelMain.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(jpanelMain);
 		jpanelMain.setLayout(new BoxLayout(jpanelMain, BoxLayout.PAGE_AXIS));
 
 		JPanel Top_Panel = new JPanel();
+		Top_Panel.setOpaque(false);
 		jpanelMain.add(Top_Panel);
 		Top_Panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel Middle_Panel = new JPanel();
+		Middle_Panel.setOpaque(false);
 		jpanelMain.add(Middle_Panel);
 		Middle_Panel.setLayout(new BoxLayout(Middle_Panel, BoxLayout.X_AXIS));
 
 		JPanel Left_Panel = new JPanel();
+		Left_Panel.setOpaque(false);
 		Middle_Panel.add(Left_Panel);
 		Left_Panel.setLayout(new BorderLayout(0, 0));
 
 		Center_Content_Panel = new JPanel();
+		Center_Content_Panel.setOpaque(false);
 		Middle_Panel.add(Center_Content_Panel);
 		Center_Content_Panel.setLayout(new BoxLayout(Center_Content_Panel, BoxLayout.PAGE_AXIS));
 
 		
 
 		JPanel Right_Panel = new JPanel();
+		Right_Panel.setOpaque(false);
 		Middle_Panel.add(Right_Panel);
 		Right_Panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel Bottom_Panel = new JPanel();
+		Bottom_Panel.setOpaque(false);
 		jpanelMain.add(Bottom_Panel);
 		Bottom_Panel.setLayout(new BorderLayout(0, 0));
 		initJFrame();

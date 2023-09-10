@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import Models.Auth.EmailModel;
 import Models.Auth.SendMailModel;
 import Models.Auth.Validation.SetFocusBorder;
+import Models.CSS.StyleColor;
 
 import javax.swing.border.EmptyBorder;
 
@@ -45,10 +46,12 @@ public class JPanelVerifyEmail extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		JPanel Top_Fix = new JPanel();
+		Top_Fix.setOpaque(false);
 		add(Top_Fix);
 		Top_Fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelForm = new JPanel();
+		jpanelForm.setOpaque(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
 
@@ -62,21 +65,24 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelForm.add(jlabelVerify);
 
 		JPanel jpanelFormCode = new JPanel();
+		jpanelFormCode.setOpaque(false);
 		jpanelForm.add(jpanelFormCode);
 		jpanelFormCode.setLayout(new BoxLayout(jpanelFormCode, BoxLayout.PAGE_AXIS));
 
 		JPanel jpanelEmail = new JPanel();
+		jpanelEmail.setOpaque(false);
 		jpanelFormCode.add(jpanelEmail);
 
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setPreferredSize(new Dimension(80, 30));
-		lblEmail.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEmail.setAlignmentX(0.5f);
-		jpanelEmail.add(lblEmail);
+		JLabel labelEmail = new JLabel("Email:");
+		labelEmail.setPreferredSize(new Dimension(80, 30));
+		labelEmail.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		labelEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelEmail.setAlignmentX(0.5f);
+		jpanelEmail.add(labelEmail);
 
 		JPanel jpanelEmailText = new JPanel();
+		jpanelEmailText.setOpaque(false);
 		jpanelEmailText.setPreferredSize(new Dimension(260, 25));
 		jpanelEmail.add(jpanelEmailText);
 		jpanelEmailText.setLayout(new BoxLayout(jpanelEmailText, BoxLayout.X_AXIS));
@@ -99,17 +105,19 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelEmailText.add(jIconSendMail);
 
 		JPanel jpanelVerifyText = new JPanel();
+		jpanelVerifyText.setOpaque(false);
 		jpanelFormCode.add(jpanelVerifyText);
 
-		JLabel lblNewLabel = new JLabel("Verify Code:");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setPreferredSize(new Dimension(80, 30));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jpanelVerifyText.add(lblNewLabel);
+		JLabel labelVerifyCode = new JLabel("Verify Code:");
+		labelVerifyCode.setHorizontalTextPosition(SwingConstants.CENTER);
+		labelVerifyCode.setAlignmentX(Component.CENTER_ALIGNMENT);
+		labelVerifyCode.setHorizontalAlignment(SwingConstants.LEFT);
+		labelVerifyCode.setPreferredSize(new Dimension(80, 30));
+		labelVerifyCode.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		jpanelVerifyText.add(labelVerifyCode);
 
 		JPanel jpanelTextField = new JPanel();
+		jpanelTextField.setOpaque(false);
 		jpanelTextField.setPreferredSize(new Dimension(260, 25));
 		jpanelVerifyText.add(jpanelTextField);
 		jpanelTextField.setLayout(new BoxLayout(jpanelTextField, BoxLayout.LINE_AXIS));
@@ -123,6 +131,7 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelTextField.add(lblNewLabel_1);
 
 		JPanel jpanelButton = new JPanel();
+		jpanelButton.setOpaque(false);
 		jpanelButton.setBorder(new EmptyBorder(1, 0, 0, 0));
 		FlowLayout flowLayout_2 = (FlowLayout) jpanelButton.getLayout();
 		flowLayout_2.setVgap(10);
@@ -132,6 +141,8 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelFormCode.add(jpanelButton);
 
 		JButton jbtnOk = new JButton("OK");
+		
+		jbtnOk.setOpaque(false);
 		jbtnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnOk_actionPerformed(e);
@@ -143,6 +154,8 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelButton.add(jbtnOk);
 
 		JButton jbtnCancel = new JButton("Cancel");
+		
+		jbtnCancel.setOpaque(false);
 		jbtnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnCancel_actionPerformed(e);
@@ -152,11 +165,25 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelButton.add(jbtnCancel);
 
 		JPanel Bottom_Fix = new JPanel();
+		Bottom_Fix.setOpaque(false);
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
 		// set border input
 		SetFocusBorder.addFocusBorder(jtextFieldEmail);
 		SetFocusBorder.addFocusBorder(jtextFieldCode);
+		
+		//set color
+		setBackground(StyleColor.FormColor());
+		//set label color
+		jlabelVerify.setForeground(StyleColor.TitleColor());
+		labelEmail.setForeground(StyleColor.TitleColor());
+		labelVerifyCode.setForeground(StyleColor.TitleColor());
+		//set btn color
+		jbtnOk.setBackground(StyleColor.BtnBackground());
+		jbtnOk.setRolloverEnabled(false);
+		jbtnCancel.setRolloverEnabled(false);
+		jbtnCancel.setBackground(StyleColor.BtnBackground());
+		
 	}
 
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
@@ -202,6 +229,7 @@ public class JPanelVerifyEmail extends JPanel {
 	private void clearScreen() {
 		removeAll();
 		revalidate();
+		setOpaque(false);
 		repaint();
 	}
 }
