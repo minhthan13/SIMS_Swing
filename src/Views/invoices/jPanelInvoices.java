@@ -1,4 +1,4 @@
-package Views.Invoices;
+package Views.invoices;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Views.Invoices.jPanelInvoices;
+import Views.Product.JPanelProduct;
 
 import javax.swing.JButton;
 import java.awt.BorderLayout;
@@ -26,6 +27,7 @@ public class JFrameDashBoard extends JFrame {
 	private JPanel contentPane;
 	private JTextField jtextFieldSearch;
 	private JPanel jpanelContent;
+
 
 	/**
 	 * Launch the application.
@@ -82,12 +84,17 @@ public class JFrameDashBoard extends JFrame {
 		jpanelLeft.setLayout(new BoxLayout(jpanelLeft, BoxLayout.PAGE_AXIS));
 		
 		JButton jbtnInventory = new JButton("Kho Hang -1,2");
+		jbtnInventory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbtnInventory_actionPerformed(e);
+			}
+		});
 		jpanelLeft.add(jbtnInventory);
 		
 		JButton jbtnInvoices = new JButton("hoa don ban hang-1");
 		jbtnInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jbtnInvoices_actionPerformed(e);
+//				jbtnInvoices_actionPerformed(e);
 			}
 		});
 		jpanelLeft.add(jbtnInvoices);
@@ -152,13 +159,13 @@ public class JFrameDashBoard extends JFrame {
 		
 	}
 
-	public void jbtnInvoices_actionPerformed(ActionEvent e) {
-		clearScreen();
-		
-		jPanelInvoices jpanelInvoices = new jPanelInvoices();
-		jpanelContent.setVisible(true);
-		jpanelContent.add(jpanelInvoices);
-	}
+//	public void jbtnInvoices_actionPerformed(ActionEvent e) {
+//		clearScreen();
+//		
+//		jPanelInvoices jpanelInvoices = new jPanelInvoices();
+//		jpanelContent.setVisible(true);
+//		jpanelContent.add(jpanelInvoices);
+//	}
 	
 	private void init() {
 		
@@ -167,5 +174,12 @@ public class JFrameDashBoard extends JFrame {
 	private void clearScreen() {
 		jpanelContent.removeAll();
 		jpanelContent.revalidate();
+	}
+	public void jbtnInventory_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelProduct jPanelProduct = new JPanelProduct();
+		jpanelContent.setVisible(true);
+		jpanelContent.add(jPanelProduct);
+		
 	}
 }
