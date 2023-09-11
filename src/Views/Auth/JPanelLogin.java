@@ -209,7 +209,7 @@ public class JPanelLogin extends JPanel {
 		// focus model.auth.validation
 
 		SetFocusBorder.addFocusBorder(jtextFieldUsername);
-		SetFocusBorder.addFocusBorderPassword(passwordShowHide.getPasswordField());
+		SetFocusBorder.addFocusBorder(passwordShowHide.getPasswordField());
 		
 		//set Style color
 		setBackground(StyleColor.FormColor());
@@ -244,6 +244,7 @@ public class JPanelLogin extends JPanel {
 	public void jbtnForgotPassword_actionPerformed(ActionEvent e) {
 		ClearScreen();
 		JPanelForgotPassword jPanelForgotPassword = new JPanelForgotPassword();
+		
 		add(jPanelForgotPassword);
 		jPanelForgotPassword.setVisible(true);
 	}
@@ -291,6 +292,8 @@ public class JPanelLogin extends JPanel {
 		removeAll();
 		revalidate();
 		repaint();
+		this.setRequestFocusEnabled(false);
 		this.setOpaque(false);
+
 	}
 }

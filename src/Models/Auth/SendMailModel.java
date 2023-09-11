@@ -10,7 +10,6 @@ public class SendMailModel {
 	public static void sendConfirmEmail(String recipientEmail, String CodeMessage) {
 		final String username = "thq130692@gmail.com";
 		final String password = "rubjrxrlaehdcazu";
-
 		// Cài đặt các thuộc tính cho sesion
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -23,7 +22,6 @@ public class SendMailModel {
 				return new PasswordAuthentication(username, password);
 			}
 		});
-
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
@@ -46,4 +44,6 @@ public class SendMailModel {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
 }

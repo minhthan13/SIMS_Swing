@@ -24,6 +24,7 @@ import Models.Auth.SendMailModel;
 import Models.Auth.Validation.InputValidator;
 import Models.Auth.Validation.SetFocusBorder;
 import Models.CSS.StyleColor;
+import Models.CSS.WaitingCursor;
 
 import javax.swing.border.EmptyBorder;
 
@@ -35,13 +36,15 @@ import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 public class JPanelForgotPassword extends JPanel {
 	private JTextField jtextFieldCode;
 	private JTextField jtextFieldEmail;
 	private JLabel jIconSendMail;
-	private PasswordShowHide JpanelNewPassword = new PasswordShowHide();
-	private PasswordShowHide JLayoutConfirmPassword = new PasswordShowHide();
+	private JTextField jtextFieldNewPassword;
+	private JTextField jtextFieldConfirm;
+
 
 	/**
 	 * Create the panel.
@@ -56,6 +59,9 @@ public class JPanelForgotPassword extends JPanel {
 		Top_Fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelForm = new JPanel();
+		jpanelForm.setRequestFocusEnabled(false);
+		jpanelForm.setFocusTraversalKeysEnabled(false);
+		jpanelForm.setFocusable(false);
 		jpanelForm.setOpaque(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
@@ -70,6 +76,9 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelForm.add(jlabelForgot);
 
 		JPanel jpanelFormCode = new JPanel();
+		jpanelFormCode.setFocusTraversalKeysEnabled(false);
+		jpanelFormCode.setFocusable(false);
+		jpanelFormCode.setRequestFocusEnabled(false);
 		jpanelFormCode.setOpaque(false);
 		jpanelForm.add(jpanelFormCode);
 		jpanelFormCode.setLayout(new BoxLayout(jpanelFormCode, BoxLayout.PAGE_AXIS));
@@ -128,6 +137,7 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelTextField.setLayout(new BoxLayout(jpanelTextField, BoxLayout.LINE_AXIS));
 
 		jtextFieldCode = new JTextField();
+		jtextFieldCode.setAutoscrolls(false);
 		jpanelTextField.add(jtextFieldCode);
 		jtextFieldCode.setColumns(16);
 
@@ -151,6 +161,7 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelTextField.add(jIconCheckCode);
 
 		JPanel jpanelNewPassword = new JPanel();
+		jpanelNewPassword.setRequestFocusEnabled(false);
 		jpanelNewPassword.setOpaque(false);
 
 		jpanelFormCode.add(jpanelNewPassword);
@@ -162,14 +173,10 @@ public class JPanelForgotPassword extends JPanel {
 		labelNewPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		labelNewPass.setAlignmentX(0.5f);
 		jpanelNewPassword.add(labelNewPass);
-		JpanelNewPassword.getPasswordField().setEditable(false);
-		JpanelNewPassword.getPasswordField().setBackground(new Color(204, 204, 204));
-		JpanelNewPassword.getPasswordField().setFocusable(false);
-		JpanelNewPassword.setOpaque(false);
-		JpanelNewPassword.setPreferredSize(new Dimension(255, 25));
-		JpanelNewPassword.getPasswordField().setEchoChar('*');
-		jpanelNewPassword.add(JpanelNewPassword);
+
+		
 		JPanel jpanelConfirmPassword = new JPanel();
+		jpanelConfirmPassword.setRequestFocusEnabled(false);
 		jpanelConfirmPassword.setOpaque(false);
 		jpanelFormCode.add(jpanelConfirmPassword);
 
@@ -180,13 +187,7 @@ public class JPanelForgotPassword extends JPanel {
 		labelConfirm.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		labelConfirm.setAlignmentX(0.5f);
 		jpanelConfirmPassword.add(labelConfirm);
-		JLayoutConfirmPassword.getPasswordField().setEditable(false);
-		JLayoutConfirmPassword.getPasswordField().setBackground(new Color(204, 204, 204));
-		JLayoutConfirmPassword.getPasswordField().setFocusable(false);
-		JLayoutConfirmPassword.setOpaque(false);
-		JLayoutConfirmPassword.setPreferredSize(new Dimension(255, 25));
-		JLayoutConfirmPassword.getPasswordField().setEchoChar('*');
-		jpanelConfirmPassword.add(JLayoutConfirmPassword);
+		
 		JPanel jpanelButton = new JPanel();
 		jpanelButton.setOpaque(false);
 		jpanelButton.setBorder(new EmptyBorder(1, 0, 0, 0));
@@ -198,6 +199,9 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelFormCode.add(jpanelButton);
 
 		JButton jbtnSave = new JButton("Save");
+		jbtnSave.setRequestFocusEnabled(false);
+		jbtnSave.setFocusPainted(false);
+		jbtnSave.setBorderPainted(false);
 		jbtnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnOk_actionPerformed(e);
@@ -209,6 +213,9 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelButton.add(jbtnSave);
 
 		JButton jbtnCancel = new JButton("Cancel");
+		jbtnCancel.setRequestFocusEnabled(false);
+		jbtnCancel.setFocusPainted(false);
+		jbtnCancel.setBorderPainted(false);
 		jbtnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnCancel_actionPerformed(e);
@@ -221,43 +228,90 @@ public class JPanelForgotPassword extends JPanel {
 		Bottom_Fix.setOpaque(false);
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
+		JPanel jpanelConfirm = new JPanel();
+		jpanelConfirm.setOpaque(false);
+		jpanelConfirm.setPreferredSize(new Dimension(260, 25));
+		jpanelConfirmPassword.add(jpanelConfirm);
+		jpanelConfirm.setLayout(new BoxLayout(jpanelConfirm, BoxLayout.LINE_AXIS));
+		
+		jtextFieldConfirm = new JTextField();
+		jtextFieldConfirm.setDisabledTextColor(Color.DARK_GRAY);
+		jtextFieldConfirm.setEnabled(false);
+		jtextFieldConfirm.setColumns(16);
+		jpanelConfirm.add(jtextFieldConfirm);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setRequestFocusEnabled(false);
+		lblNewLabel_1.setPreferredSize(new Dimension(35, 25));
+		jpanelConfirm.add(lblNewLabel_1);
+		labelNewPass.setForeground(StyleColor.TitleColor());
+		
+		JPanel jpanelTextNew = new JPanel();
+		jpanelTextNew.setOpaque(false);
+		jpanelTextNew.setPreferredSize(new Dimension(260, 25));
+		jpanelNewPassword.add(jpanelTextNew);
+		jpanelTextNew.setLayout(new BoxLayout(jpanelTextNew, BoxLayout.LINE_AXIS));
+		
+		jtextFieldNewPassword = new JTextField();
+		jtextFieldNewPassword.setDisabledTextColor(Color.DARK_GRAY);
+		jtextFieldNewPassword.setEnabled(false);
+		jpanelTextNew.add(jtextFieldNewPassword);
+		jtextFieldNewPassword.setColumns(16);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setPreferredSize(new Dimension(35, 25));
+		lblNewLabel.setRequestFocusEnabled(false);
+		jpanelTextNew.add(lblNewLabel);
 		// set border input
 		SetFocusBorder.addFocusBorder(jtextFieldEmail);
 		SetFocusBorder.addFocusBorder(jtextFieldCode);
-		SetFocusBorder.addFocusBorderPassword(JpanelNewPassword.getPasswordField());
-		SetFocusBorder.addFocusBorderPassword(JLayoutConfirmPassword.getPasswordField());
+		SetFocusBorder.addFocusBorder(jtextFieldNewPassword);
+		SetFocusBorder.addFocusBorder(jtextFieldConfirm);
 
 		// set color
 		setBackground(StyleColor.FormColor());
+		jpanelFormCode.setBackground(StyleColor.FormColor());
+		
 		// set label color
 		jlabelForgot.setForeground(StyleColor.TitleColor());
 		labelEmail.setForeground(StyleColor.TitleColor());
 		labelVerifyCode.setForeground(StyleColor.TitleColor());
 		labelConfirm.setForeground(StyleColor.TitleColor());
-		labelNewPass.setForeground(StyleColor.TitleColor());
+		
+		
 		// set btn
+		
 		jbtnSave.setBackground(StyleColor.BtnBackground());
 		jbtnSave.setRolloverEnabled(false);
 		jbtnCancel.setBackground(StyleColor.BtnBackground());
 		jbtnCancel.setRolloverEnabled(false);
+		
+		
 
 	}
 
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
-		EmailModel emailModel = new EmailModel();
-		String verifyEmail = jtextFieldEmail.getText();
-		Employees employees = emailModel.FindByEmail(verifyEmail);
-		if (employees != null) {
-			String verifyCodeString = employees.getToken();
-			jtextFieldEmail.setEditable(false);
-			SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
-			JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !", "Message",
-					JOptionPane.INFORMATION_MESSAGE);
-		} else {
-			JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !", "Failed",
-					JOptionPane.WARNING_MESSAGE);
+		try {
+			EmailModel emailModel = new EmailModel();
+			String verifyEmail = jtextFieldEmail.getText();
+			Employees employees = emailModel.FindByEmail(verifyEmail);
+			if (employees != null) {
+				WaitingCursor.setWaitingCursor(jIconSendMail);
+				Thread.sleep(3000);
+				String verifyCodeString = employees.getToken();
+				jtextFieldEmail.setEditable(false);
+				SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
+				JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !", "Message",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !", "Failed",
+						JOptionPane.WARNING_MESSAGE);
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
 		}
-
+		
+		WaitingCursor.setDefaultCursor(jIconSendMail);
 	}
 
 	public void jIconCheckCode_mouseClicked(MouseEvent e) {
@@ -266,26 +320,26 @@ public class JPanelForgotPassword extends JPanel {
 		String token = employees.getToken();
 		String validCode = jtextFieldCode.getText();
 		if (token.equals(validCode)) {
-			jtextFieldEmail.setEditable(false);
-			jtextFieldEmail.setFocusable(true);
-			jtextFieldEmail.setBackground(new Color(204, 204, 204));
-			jtextFieldCode.setEditable(false);
-			jtextFieldCode.setFocusable(true);
-			jtextFieldCode.setBackground(new Color(204, 204, 204));
-			JpanelNewPassword.getPasswordField().setEditable(true);
-			JpanelNewPassword.getPasswordField().setFocusable(true);
-			JpanelNewPassword.getPasswordField().setBackground(new Color(255, 255, 255));
-			JLayoutConfirmPassword.getPasswordField().setEditable(true);
-			JLayoutConfirmPassword.getPasswordField().setFocusable(true);
-			JLayoutConfirmPassword.getPasswordField().setBackground(new Color(255, 255, 255));
+			jtextFieldEmail.setEnabled(false);
+			jtextFieldEmail.setBorder(null);
+			jtextFieldCode.setBorder(null);
+			jtextFieldCode.setEnabled(false);
+			jtextFieldCode.setRequestFocusEnabled(false);
+			
+			jtextFieldNewPassword.setEnabled(true);
+			jtextFieldConfirm.setEnabled(true);
+			jtextFieldNewPassword.requestFocus();
+		
+			
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Invalid Verify Code !!", "Failed", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
 	public void jbtnOk_actionPerformed(ActionEvent e) {
-		String NewPassword = JpanelNewPassword.getPasswordAsString();
-		String Confirm = JLayoutConfirmPassword.getPasswordAsString();
+		String NewPassword = jtextFieldNewPassword.getText();
+		String Confirm = jtextFieldConfirm.getText();
 		String emailString = jtextFieldEmail.getText();
 		EmailModel emailModel = new EmailModel();
 		if (!NewPassword.equals(Confirm)) {

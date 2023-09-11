@@ -20,8 +20,10 @@ import javax.swing.SwingConstants;
 
 import Models.Auth.EmailModel;
 import Models.Auth.SendMailModel;
+
 import Models.Auth.Validation.SetFocusBorder;
 import Models.CSS.StyleColor;
+import Models.CSS.WaitingCursor;
 
 import javax.swing.border.EmptyBorder;
 
@@ -37,6 +39,7 @@ public class JPanelVerifyEmail extends JPanel {
 	private JTextField jtextFieldCode;
 	private JTextField jtextFieldEmail;
 	private JLabel jIconSendMail;
+	private JPanel jpanelEmail;
 
 	/**
 	 * Create the panel.
@@ -69,7 +72,7 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelForm.add(jpanelFormCode);
 		jpanelFormCode.setLayout(new BoxLayout(jpanelFormCode, BoxLayout.PAGE_AXIS));
 
-		JPanel jpanelEmail = new JPanel();
+		jpanelEmail = new JPanel();
 		jpanelEmail.setOpaque(false);
 		jpanelFormCode.add(jpanelEmail);
 
@@ -97,7 +100,9 @@ public class JPanelVerifyEmail extends JPanel {
 		jIconSendMail.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				jIconSendMail_mouseClicked(e);
+				
+					jIconSendMail_mouseClicked(e);
+				
 			}
 		});
 		jIconSendMail.setIcon(new ImageIcon("D:\\CODE\\JavaSwing_Project\\SIMS\\src\\Resources\\Icons\\sendmail.png"));
@@ -185,19 +190,27 @@ public class JPanelVerifyEmail extends JPanel {
 		jbtnCancel.setBackground(StyleColor.BtnBackground());
 		
 	}
-
+	
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
-		EmailModel emailModel = new EmailModel();
-		String verifyEmail = jtextFieldEmail.getText().trim();
-		Employees employees = emailModel.FindByEmail(verifyEmail);
-		if(employees != null) {
-			String verifyCodeString = employees.getToken();
-			jtextFieldEmail.setEditable(false);
-			SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
-			JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !","Message",JOptionPane.INFORMATION_MESSAGE);
-		}else {
-			JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !","Failed",JOptionPane.WARNING_MESSAGE);
+		
+		try {
+			WaitingCursor.setWaitingCursor(jIconSendMail);
+			Thread.sleep(4000);
+			EmailModel emailModel = new EmailModel();
+			String verifyEmail = jtextFieldEmail.getText().trim();
+			Employees employees = emailModel.FindByEmail(verifyEmail);
+			if(employees != null) {
+				String verifyCodeString = employees.getToken();
+				jtextFieldEmail.setEditable(false);
+				SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
+				JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !","Message",JOptionPane.INFORMATION_MESSAGE);
+			}else {
+				JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !","Failed",JOptionPane.WARNING_MESSAGE);
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
 		}
+		WaitingCursor.setDefaultCursor(jIconSendMail);
 		
 	}
 
@@ -232,4 +245,5 @@ public class JPanelVerifyEmail extends JPanel {
 		setOpaque(false);
 		repaint();
 	}
+	 
 }
