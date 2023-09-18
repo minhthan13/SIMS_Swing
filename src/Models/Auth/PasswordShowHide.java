@@ -90,64 +90,64 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PasswordShowHide extends JPanel {
-    private JPasswordField passwordField;
-    private JButton toggleButton;
-    private boolean passwordVisible;
-    private Icon showIcon;
-    private Icon hideIcon;
-    private char echoChar;
+	private JPasswordField passwordField;
+	private JButton toggleButton;
+	private boolean passwordVisible;
+	private Icon showIcon;
+	private Icon hideIcon;
+	private char echoChar;
 
-    public PasswordShowHide() {
-        this.setLayout(new BorderLayout());
+	public PasswordShowHide() {
+		this.setLayout(new BorderLayout());
 
-        this.passwordField = new JPasswordField();
-        this.passwordVisible = false;
-        this.echoChar = '*';
-        this.showIcon = createResizedIcon("src/Resources/Icons/Show.png", 24, 24);
-        this.hideIcon = createResizedIcon("src/Resources/Icons/Hide.png", 24, 24);
+		this.passwordField = new JPasswordField();
+		this.passwordVisible = false;
+		this.echoChar = '*';
+		this.showIcon = createResizedIcon("src/Resources/Icons/Show.png", 24, 24);
+		this.hideIcon = createResizedIcon("src/Resources/Icons/Hide.png", 24, 24);
 
-        this.toggleButton = new JButton(showIcon);
+		this.toggleButton = new JButton(showIcon);
 
-        toggleButton.setPreferredSize(new Dimension(30, 25));
-        toggleButton.setBorderPainted(false);
-        toggleButton.setFocusPainted(false);
-        toggleButton.setContentAreaFilled(false);
-        toggleButton.setFocusable(false);
+		toggleButton.setPreferredSize(new Dimension(30, 25));
+		toggleButton.setBorderPainted(false);
+		toggleButton.setFocusPainted(false);
+		toggleButton.setContentAreaFilled(false);
+		toggleButton.setFocusable(false);
 
-        toggleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        toggleButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                togglePasswordVisibility();
-            }
-        });
+		toggleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		toggleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				togglePasswordVisibility();
+			}
+		});
 
-        this.add(passwordField, BorderLayout.CENTER);
-        this.add(toggleButton, BorderLayout.EAST);
-    }
+		this.add(passwordField, BorderLayout.CENTER);
+		this.add(toggleButton, BorderLayout.EAST);
+	}
 
-    private void togglePasswordVisibility() {
-        passwordVisible = !passwordVisible;
-        echoChar = passwordVisible ? (char) 0 : '*';
-        passwordField.setEchoChar(echoChar);
-        toggleButton.setIcon(passwordVisible ? hideIcon : showIcon);
-        toggleButton.setFocusPainted(false);
-    }
+	private void togglePasswordVisibility() {
+		passwordVisible = !passwordVisible;
+		echoChar = passwordVisible ? (char) 0 : '*';
+		passwordField.setEchoChar(echoChar);
+		toggleButton.setIcon(passwordVisible ? hideIcon : showIcon);
+		toggleButton.setFocusPainted(false);
+	}
 
-    public JButton getToggleButton() {
-        return toggleButton;
-    }
+	public JButton getToggleButton() {
+		return toggleButton;
+	}
 
-    public JPasswordField getPasswordField() {
-        return passwordField;
-    }
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
 
-    public String getPasswordAsString() {
-        return new String(passwordField.getPassword());
-    }
+	public String getPasswordAsString() {
+		return new String(passwordField.getPassword());
+	}
 
-    private Icon createResizedIcon(String imagePath, int width, int height) {
-        ImageIcon icon = new ImageIcon(imagePath);
-        Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(image);
-    }
+	private Icon createResizedIcon(String imagePath, int width, int height) {
+		ImageIcon icon = new ImageIcon(imagePath);
+		Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(image);
+	}
 }

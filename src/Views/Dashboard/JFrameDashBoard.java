@@ -27,7 +27,7 @@ public class JFrameDashBoard extends JFrame {
 	private JPanel contentPane;
 	private JTextField jtextFieldSearch;
 	private JPanel jpanelContent;
-
+	private int employeeId;
 
 	/**
 	 * Launch the application.
@@ -94,7 +94,7 @@ public class JFrameDashBoard extends JFrame {
 		JButton jbtnInvoices = new JButton("hoa don ban hang-1");
 		jbtnInvoices.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				jbtnInvoices_actionPerformed(e);
+				jbtnInvoices_actionPerformed(e);
 			}
 		});
 		jpanelLeft.add(jbtnInvoices);
@@ -138,7 +138,7 @@ public class JFrameDashBoard extends JFrame {
 		
 		jpanelContent = new JPanel();
 		contentPane.add(jpanelContent, BorderLayout.CENTER);
-		jpanelContent.setLayout(new BorderLayout(0, 0));
+		jpanelContent.setLayout(new BoxLayout(jpanelContent, BoxLayout.X_AXIS));
 		
 		JPanel jpanelTop = new JPanel();
 		contentPane.add(jpanelTop, BorderLayout.NORTH);
@@ -159,13 +159,17 @@ public class JFrameDashBoard extends JFrame {
 		
 	}
 
-//	public void jbtnInvoices_actionPerformed(ActionEvent e) {
-//		clearScreen();
-//		
-//		jPanelInvoices jpanelInvoices = new jPanelInvoices();
-//		jpanelContent.setVisible(true);
-//		jpanelContent.add(jpanelInvoices);
-//	}
+	public void jbtnInvoices_actionPerformed(ActionEvent e) {
+		clearScreen();		
+		JPanelInvoices jpanelInvoices = new JPanelInvoices();
+		jpanelContent.setVisible(true);
+		jpanelContent.add(jpanelInvoices);
+	}
+	
+	public JFrameDashBoard(int employeeId) {
+		this();
+		this.employeeId = employeeId;		
+	}
 	
 	private void init() {
 		
@@ -174,12 +178,17 @@ public class JFrameDashBoard extends JFrame {
 	private void clearScreen() {
 		jpanelContent.removeAll();
 		jpanelContent.revalidate();
+		jpanelContent.repaint();
 	}
+	
 	public void jbtnInventory_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelProduct jPanelProduct = new JPanelProduct();
 		jpanelContent.setVisible(true);
-		jpanelContent.add(jPanelProduct);
+		jpanelContent.add(jPanelProduct);		
+	}
+	
+	public static void getEmployee() {
 		
 	}
 }

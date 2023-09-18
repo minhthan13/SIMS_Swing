@@ -27,23 +27,19 @@ public class SendMailModel {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
 			message.setSubject("SIMS application verify code:");
-			String htmlContent = "<hr/><br/>"
-					+"<div>"
+			String htmlContent = "<hr/><br/>" + "<div>"
 					+ "<div style='font-size: 18px;width: 100%;font-style: italic;color: #3776c9;'>Your Verification Code is:</div>"
 					+ "<p style='font-size: 20px;display:inline-block;background-color: #ebeb43;padding:10px 80px;margin: 10px'><strong>"
-					+ CodeMessage + "</strong></p>"
-					+ "</div>"
-					+"<hr/><div style='font-size:16px;color: #3776c9;'>From Administrator SIMS !!!</div>";
+					+ CodeMessage + "</strong></p>" + "</div>"
+					+ "<hr/><div style='font-size:16px;color: #3776c9;'>From Administrator SIMS !!!</div>";
 
 			message.setContent(htmlContent, "text/html; charset=utf-8");
 
 			Transport.send(message);
-			
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
 }

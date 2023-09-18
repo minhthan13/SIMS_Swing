@@ -13,13 +13,15 @@ public class InputValidator {
 	public static boolean isPasswordValid(String password) {
 		return password.isEmpty();
 	}
-	 public static boolean isUsernameOrEmailValid(String input) {
-			    if (input.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")) {
-			        return false;
-			    }
-			    return !input.matches("^[a-zA-Z0-9._]+$");
-			
-	    }
+
+	public static boolean isUsernameOrEmailValid(String input) {
+		if (input.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")) {
+			return false;
+		}
+		return !input.matches("^[a-zA-Z0-9._]+$");
+
+	}
+
 	public static boolean isValidEmail(String email) {
 		String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
 		Pattern pattern = Pattern.compile(emailRegex);

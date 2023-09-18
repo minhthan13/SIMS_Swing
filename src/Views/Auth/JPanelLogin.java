@@ -41,29 +41,29 @@ public class JPanelLogin extends JPanel {
 	private JTextField jtextFieldUsername;
 
 	private JFrame parentFrame;
-	
+
 	private String BtnNoBG = "#f7d794";
+
 	/**
 	 * Create the panel.
 	 */
 	public JPanelLogin() {
 		setOpaque(false);
-		
+
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		
-        
+
 		JPanel Top_Fix = new JPanel();
 		Top_Fix.setOpaque(false);
 		add(Top_Fix);
 		Top_Fix.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel jpanelForm = new JPanel();
 		jpanelForm.setOpaque(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
 
 		JLabel jlabelLogin = new JLabel("Login");
-		
+
 		jlabelLogin.setMinimumSize(new Dimension(300, 60));
 		jlabelLogin.setMaximumSize(new Dimension(300, 60));
 		jlabelLogin.setPreferredSize(new Dimension(300, 80));
@@ -210,19 +210,18 @@ public class JPanelLogin extends JPanel {
 
 		SetFocusBorder.addFocusBorder(jtextFieldUsername);
 		SetFocusBorder.addFocusBorder(passwordShowHide.getPasswordField());
-		
-		//set Style color
-		setBackground(StyleColor.FormColor());
-//		
+
+		// set Style color
+
 		jlabelLogin.setForeground(StyleColor.TitleColor());
 		lblNewLabel.setForeground(StyleColor.TitleColor());
 		lblNewLabel_1.setForeground(StyleColor.TitleColor());
-		
+
 		jbtnVerifyAccount.setForeground(StyleColor.btnNoBacground());
 		jbtnVerifyAccount.setRolloverEnabled(false);
 		jbtnForgotPassword.setForeground(StyleColor.btnNoBacground());
 		jbtnForgotPassword.setRolloverEnabled(false);
-		
+
 		jbtnLogin.setBackground(StyleColor.BtnBackground());
 		jbtnLogin.setRolloverEnabled(false);
 		jbtnRegister.setBackground(StyleColor.BtnBackground());
@@ -244,7 +243,7 @@ public class JPanelLogin extends JPanel {
 	public void jbtnForgotPassword_actionPerformed(ActionEvent e) {
 		ClearScreen();
 		JPanelForgotPassword jPanelForgotPassword = new JPanelForgotPassword();
-		
+
 		add(jPanelForgotPassword);
 		jPanelForgotPassword.setVisible(true);
 	}
@@ -266,7 +265,7 @@ public class JPanelLogin extends JPanel {
 			InputValidator.showErrorMessage(this, "Please Enter Password");
 			return;
 		}
-		
+
 		Employees employee = loginModel.Login(usernameOrEmail, password);
 		if (employee != null) {
 			java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
@@ -276,8 +275,9 @@ public class JPanelLogin extends JPanel {
 			JFrameDashBoard jFrameDashBoard = new JFrameDashBoard();
 			this.setVisible(false);
 			jFrameDashBoard.setVisible(true);
-		}else {
-			JOptionPane.showMessageDialog(this, "Login Failed, Please Try Again !!","Login Failed",JOptionPane.ERROR_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(this, "Login Failed, Please Try Again !!", "Login Failed",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -292,8 +292,6 @@ public class JPanelLogin extends JPanel {
 		removeAll();
 		revalidate();
 		repaint();
-		this.setRequestFocusEnabled(false);
-		this.setOpaque(false);
 
 	}
 }

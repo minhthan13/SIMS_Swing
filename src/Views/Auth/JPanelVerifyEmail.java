@@ -100,9 +100,9 @@ public class JPanelVerifyEmail extends JPanel {
 		jIconSendMail.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-					jIconSendMail_mouseClicked(e);
-				
+
+				jIconSendMail_mouseClicked(e);
+
 			}
 		});
 		jIconSendMail.setIcon(new ImageIcon("D:\\CODE\\JavaSwing_Project\\SIMS\\src\\Resources\\Icons\\sendmail.png"));
@@ -130,7 +130,7 @@ public class JPanelVerifyEmail extends JPanel {
 		jtextFieldCode = new JTextField();
 		jpanelTextField.add(jtextFieldCode);
 		jtextFieldCode.setColumns(16);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setPreferredSize(new Dimension(35, 25));
 		jpanelTextField.add(lblNewLabel_1);
@@ -146,7 +146,7 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelFormCode.add(jpanelButton);
 
 		JButton jbtnOk = new JButton("OK");
-		
+
 		jbtnOk.setOpaque(false);
 		jbtnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,7 +159,7 @@ public class JPanelVerifyEmail extends JPanel {
 		jpanelButton.add(jbtnOk);
 
 		JButton jbtnCancel = new JButton("Cancel");
-		
+
 		jbtnCancel.setOpaque(false);
 		jbtnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -176,42 +176,44 @@ public class JPanelVerifyEmail extends JPanel {
 		// set border input
 		SetFocusBorder.addFocusBorder(jtextFieldEmail);
 		SetFocusBorder.addFocusBorder(jtextFieldCode);
-		
-		//set color
+
+		// set color
 		setBackground(StyleColor.FormColor());
-		//set label color
+		// set label color
 		jlabelVerify.setForeground(StyleColor.TitleColor());
 		labelEmail.setForeground(StyleColor.TitleColor());
 		labelVerifyCode.setForeground(StyleColor.TitleColor());
-		//set btn color
+		// set btn color
 		jbtnOk.setBackground(StyleColor.BtnBackground());
 		jbtnOk.setRolloverEnabled(false);
 		jbtnCancel.setRolloverEnabled(false);
 		jbtnCancel.setBackground(StyleColor.BtnBackground());
-		
+
 	}
-	
+
 	public void jIconSendMail_mouseClicked(MouseEvent e) {
-		
+
 		try {
 			WaitingCursor.setWaitingCursor(jIconSendMail);
 			Thread.sleep(4000);
 			EmailModel emailModel = new EmailModel();
 			String verifyEmail = jtextFieldEmail.getText().trim();
 			Employees employees = emailModel.FindByEmail(verifyEmail);
-			if(employees != null) {
+			if (employees != null) {
 				String verifyCodeString = employees.getToken();
 				jtextFieldEmail.setEditable(false);
 				SendMailModel.sendConfirmEmail(verifyEmail, verifyCodeString);
-				JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !","Message",JOptionPane.INFORMATION_MESSAGE);
-			}else {
-				JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !","Failed",JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Please Check Email Confirm Verify Code !", "Message",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "The account is incorrect or does not exist !", "Failed",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 		WaitingCursor.setDefaultCursor(jIconSendMail);
-		
+
 	}
 
 	public void jbtnOk_actionPerformed(ActionEvent e) {
@@ -245,5 +247,5 @@ public class JPanelVerifyEmail extends JPanel {
 		setOpaque(false);
 		repaint();
 	}
-	 
+
 }

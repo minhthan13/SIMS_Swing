@@ -1,30 +1,24 @@
 package Views.Product;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.ImageIcon;
 
 import Entities.Products;
 import Models.Product.ProductModel;
 
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class JPanelProduct extends JPanel {
     private JTable jtable1;
     private JScrollPane scrollPane;
+    private JPopupMenu popupMenu; // Thêm JPopupMenu
 
     public JPanelProduct() {
         setLayout(new BorderLayout(0, 0));
@@ -55,41 +49,85 @@ public class JPanelProduct extends JPanel {
 
         jtable1 = new JTable();
         scrollPane.setViewportView(jtable1);
+
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("STT");
-        model.addColumn("Product Code");
         model.addColumn("Name");
         model.addColumn("Price");
         model.addColumn("Quantity");
         model.addColumn("Image");
-        model.addColumn("Discount");
-        model.addColumn("Disable");
-        model.addColumn("Created");
-        model.addColumn("unit_id");
 
         List<Products> products = new ProductModel().findAll();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < products.size(); i++) {
             Products product = products.get(i);
-            // Chèn hình ảnh vào cột "Image"
+            // Insert into collom "Image"
             ImageIcon imageIcon = new ImageIcon(product.getImage());
-            model.addRow(new Object[] { i + 1, product.getProduct_code(), product.getName(), product.getPrice(),
-                    product.getQuantity(), imageIcon, product.getDiscount_percent(), product.isDisable(),
-                    simpleDateFormat.format(product.getCreated_at()), product.getUnit_id() });
+            model.addRow(new Object[] { i + 1, product.getName(), product.getPrice(),
+                    product.getQuantity(), imageIcon });
         }
         jtable1.setModel(model);
 
-        // Áp dụng Renderer cho cột "Image"
         int imageColumnIndex = model.findColumn("Image");
-        int desiredWidth = 300; // Độ rộng mong muốn
-        int desiredHeight = 300; // Độ cao mong muốn
-        jtable1.getColumnModel().getColumn(imageColumnIndex).setCellRenderer(new ImageRenderer(desiredWidth, desiredHeight));
+        int columnIndex = model.findColumn("Image");
+        int desiredWidth = 100;
+        jtable1.getColumnModel().getColumn(columnIndex).setPreferredWidth(desiredWidth);
 
+        int desiredHeight = 100;
+        jtable1.getColumnModel().getColumn(imageColumnIndex)
+                .setCellRenderer(new ImageRenderer(desiredWidth, desiredHeight));
+
+        // Tạo JPopupMenu và MenuItem
+        popupMenu = new JPopupMenu();
+        JMenuItem menuItem = new JMenuItem("ADD");
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Xử lý tùy chọn khi người dùng chọn nó
+                int selectedRow = jtable1.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Products selectedProduct = getProductFromSelectedRow(selectedRow);
+                    JOptionPane.showMessageDialog(null, "Bạn đã chọn tùy chọn mới cho sản phẩm: " + selectedProduct.getName());
+                }
+            }
+        });
+        popupMenu.add(menuItem);
+
+        // Thêm MouseListener để lắng nghe sự kiện chuột phải
+        jtable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    int row = jtable1.rowAtPoint(e.getPoint());
+                    if (row >= 0) {
+                        jtable1.setRowSelectionInterval(row, row);
+                        popupMenu.show(jtable1, e.getX(), e.getY());
+                    }
+                }
+            }
+        });
+    }
+
+    private Products getProductFromSelectedRow(int row) {
+        DefaultTableModel model = (DefaultTableModel) jtable1.getModel();
+        // Lấy dữ liệu từ hàng được chọn
+        String name = model.getValueAt(row, model.findColumn("Name")).toString();
+        double price = Double.parseDouble(model.getValueAt(row, model.findColumn("Price")).toString());
+//        double quantity = Integer.parseInt(model.getValueAt(row, model.findColumn("Quantity")).toString());
+
+        Products product = new Products();
+        product.setName(name);
+        product.setPrice(price);
+//        product.setQuantity(quantity);
+        System.out.println(product.getName());
+        System.out.println(product.getPrice());
+        return product;
+        
     }
 
     public class ImageRenderer extends DefaultTableCellRenderer {
-        private int width;  // Độ rộng mong muốn cho hình ảnh
-        private int height; // Độ cao mong muốn cho hình ảnh
+        private int width;
+        private int height;
 
         public ImageRenderer(int width, int height) {
             this.width = width;
@@ -100,7 +138,6 @@ public class JPanelProduct extends JPanel {
         protected void setValue(Object value) {
             if (value instanceof ImageIcon) {
                 ImageIcon imageIcon = (ImageIcon) value;
-                // Điều chỉnh kích thước ảnh theo độ rộng và độ cao mong muốn
                 Image image = imageIcon.getImage();
                 Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 setIcon(new ImageIcon(scaledImage));
@@ -108,4 +145,12 @@ public class JPanelProduct extends JPanel {
                 super.setValue(value);
             }
         }
-    }}
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            table.setRowHeight(row, height);
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    }
+}

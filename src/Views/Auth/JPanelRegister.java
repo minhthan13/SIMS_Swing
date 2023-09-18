@@ -47,6 +47,8 @@ import Views.Index;
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.CompoundBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JPanelRegister extends JPanel {
 	private JTextField jtextFieldUsername;
@@ -59,11 +61,17 @@ public class JPanelRegister extends JPanel {
 	private File selectedFile = null;
 	private JLabel jlabelImage;
 	private Index parentFrame;
+	private JLabel ButtonBrowse;
 
 	/**
 	 * Create the panel.
 	 */
 	public JPanelRegister() {
+		setDoubleBuffered(false);
+		setFocusTraversalKeysEnabled(false);
+		setFocusable(false);
+		setRequestFocusEnabled(false);
+		setOpaque(false);
 
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -73,7 +81,9 @@ public class JPanelRegister extends JPanel {
 		Top_Fix.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelForm = new JPanel();
-		jpanelForm.setOpaque(false);
+		jpanelForm.setInheritsPopupMenu(true);
+		jpanelForm.setIgnoreRepaint(true);
+		jpanelForm.setRequestFocusEnabled(false);
 		add(jpanelForm);
 		jpanelForm.setLayout(new BoxLayout(jpanelForm, BoxLayout.PAGE_AXIS));
 
@@ -103,7 +113,8 @@ public class JPanelRegister extends JPanel {
 		Center_Content.setLayout(new BoxLayout(Center_Content, BoxLayout.LINE_AXIS));
 
 		JPanel Left_Form = new JPanel();
-		Left_Form.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 5), new MatteBorder(0, 0, 0, 3, (Color) new Color(204, 255, 255))));
+		Left_Form.setBorder(new CompoundBorder(new EmptyBorder(0, 0, 0, 5),
+				new MatteBorder(0, 0, 0, 3, (Color) new Color(204, 255, 255))));
 		Left_Form.setOpaque(false);
 		Center_Content.add(Left_Form);
 		Left_Form.setLayout(new BoxLayout(Left_Form, BoxLayout.PAGE_AXIS));
@@ -415,28 +426,11 @@ public class JPanelRegister extends JPanel {
 		labelImage.setAlignmentX(0.5f);
 		jPanelLabel.add(labelImage);
 
-		JButton jbtnBrowse = new JButton("Browse");
-		jbtnBrowse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbtnBrowse_actionPerformed(e);
-
-			}
-		});
-
 		jlabelImage = new JLabel("");
 		jlabelImage.setBorder(new LineBorder(new Color(255, 255, 204)));
 		jlabelImage.setSize(new Dimension(120, 120));
 		jlabelImage.setPreferredSize(new Dimension(120, 120));
 		jpanelImage.add(jlabelImage);
-		jbtnBrowse.setForeground(SystemColor.textHighlight);
-		jbtnBrowse.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		jbtnBrowse.setBorderPainted(false);
-		jbtnBrowse.setContentAreaFilled(false);
-		jbtnBrowse.setFocusPainted(false);
-		jbtnBrowse.setIcon(new ImageIcon("D:\\CODE\\JavaSwing_Project\\SIMS\\src\\Resources\\Icons\\add2.png"));
-		jbtnBrowse.setHorizontalTextPosition(SwingConstants.RIGHT);
-		jbtnBrowse.setAlignmentX(Component.CENTER_ALIGNMENT);
-		jpanelImage.add(jbtnBrowse);
 
 		JPanel Rigth_fix = new JPanel();
 		Rigth_fix.setOpaque(false);
@@ -464,6 +458,7 @@ public class JPanelRegister extends JPanel {
 		jpanelButton.add(jbtnRegister);
 
 		JButton jbtnCancel = new JButton("Cancel");
+		jbtnCancel.setFocusPainted(false);
 		jbtnCancel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		jbtnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -476,8 +471,20 @@ public class JPanelRegister extends JPanel {
 		Bottom_Fix.setOpaque(false);
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
-
+		ButtonBrowse = new JLabel("Browse");
+		ButtonBrowse.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		ButtonBrowse.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ButtonBrowse_mouseClicked(e);
+			}
+		});
+		ButtonBrowse.setForeground(new Color(255, 255, 0));
+		ButtonBrowse.setIcon(new ImageIcon("D:\\CODE\\JavaSwing_Project\\SIMS\\src\\Resources\\Icons\\add2.png"));
+		jpanelImage.add(ButtonBrowse);
 		initPanel();
+
+		jpanelForm.setBackground(StyleColor.FormColor());
 		// focus model.auth.validation
 		SetFocusBorder.addFocusBorder(jtextFieldUsername);
 		SetFocusBorder.addFocusBorder(jtextFieldPassword);
@@ -485,10 +492,8 @@ public class JPanelRegister extends JPanel {
 		SetFocusBorder.addFocusBorder(jtextFieldEmail);
 		SetFocusBorder.addFocusBorder(jtextFieldTel);
 		SetFocusBorder.addFocusBorder(jtextFieldAddress);
-		
-		// set color
-		setBackground(StyleColor.FormColor());
-		//set label color
+
+		// set label color
 		jlabelRegister.setForeground(StyleColor.TitleColor());
 		labelUsername.setForeground(StyleColor.TitleColor());
 		labelPassword.setForeground(StyleColor.TitleColor());
@@ -498,15 +503,12 @@ public class JPanelRegister extends JPanel {
 		labelPositions.setForeground(StyleColor.TitleColor());
 		labelImage.setForeground(StyleColor.TitleColor());
 		labelTelephone.setForeground(StyleColor.TitleColor());
-		//btn color 
-		jbtnBrowse.setForeground(StyleColor.btnNoBacground());
-		jbtnBrowse.setRolloverEnabled(false);
+
 		jbtnRegister.setBackground(StyleColor.BtnBackground());
 		jbtnRegister.setRolloverEnabled(false);
 		jbtnCancel.setBackground(StyleColor.BtnBackground());
 		jbtnCancel.setRolloverEnabled(false);
-		
-		
+
 	}
 
 	private void initPanel() {
@@ -518,6 +520,26 @@ public class JPanelRegister extends JPanel {
 		}
 		jcomboBoxPositions.setModel(model);
 		jcomboBoxPositions.setRenderer(new PositionsBox());
+
+	}
+
+	public void ButtonBrowse_mouseClicked(MouseEvent e) {
+		JFileChooser jFileChooser = new JFileChooser("C:\\Users\\Krantz\\Desktop\\img");
+		jFileChooser.setDialogTitle("Select a Photo");
+		jFileChooser.setMultiSelectionEnabled(false);
+		int result = jFileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+
+			selectedFile = jFileChooser.getSelectedFile();
+			int width = jlabelImage.getWidth();
+			int height = jlabelImage.getHeight();
+			ImageIcon imageIcon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath()).getImage()
+					.getScaledInstance(width, height, Image.SCALE_DEFAULT));
+			jlabelImage.setIcon(imageIcon);
+
+		}
+		jFileChooser.setVisible(false);
+		repaint();
 	}
 
 	public void jbtnRegister_actionPerformed(ActionEvent e) {
@@ -552,7 +574,7 @@ public class JPanelRegister extends JPanel {
 				} else {
 					ClearScreen();
 					JPanelLogin jLogin = new JPanelLogin();
-			
+
 					add(jLogin);
 					jLogin.setVisible(true);
 				}
@@ -569,22 +591,7 @@ public class JPanelRegister extends JPanel {
 		JPanelLogin jLogin = new JPanelLogin();
 		add(jLogin);
 		jLogin.setVisible(true);
-		
-	}
 
-	public void jbtnBrowse_actionPerformed(ActionEvent e) {
-		JFileChooser jFileChooser = new JFileChooser("C:\\Users\\Krantz\\Desktop\\img");
-		jFileChooser.setDialogTitle("Select a Photo");
-		jFileChooser.setMultiSelectionEnabled(false);
-		int result = jFileChooser.showOpenDialog(null);
-		if (result == JFileChooser.APPROVE_OPTION) {
-			selectedFile = jFileChooser.getSelectedFile();
-			int width = jlabelImage.getWidth();
-			int height = jlabelImage.getHeight();
-			ImageIcon imageIcon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath()).getImage()
-					.getScaledInstance(width, height, Image.SCALE_DEFAULT));
-			jlabelImage.setIcon(imageIcon);
-		}
 	}
 
 	private class PositionsBox extends DefaultListCellRenderer {

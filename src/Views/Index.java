@@ -51,6 +51,9 @@ public class Index extends JFrame {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.put("Button.focusPainted", false);
+			UIManager.put("Button.borderPainted", false);
+
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -74,11 +77,11 @@ public class Index extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 921, 590);
 		jpanelMain = new JPanel() {
-			  protected void paintComponent(Graphics g) {
-	                super.paintComponent(g);
-	                ImageIcon backgroundImage = new ImageIcon("src/Resources/Images/Background-Blue.png"); // Thay đổi đường dẫn đến hình ảnh của bạn
-	                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), null);
-	            }
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				ImageIcon backgroundImage = new ImageIcon("src/Resources/Images/Background-Blue.png");
+				g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), null);
+			}
 		};
 		jpanelMain.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -105,8 +108,6 @@ public class Index extends JFrame {
 		Middle_Panel.add(Center_Content_Panel);
 		Center_Content_Panel.setLayout(new BoxLayout(Center_Content_Panel, BoxLayout.PAGE_AXIS));
 
-		
-
 		JPanel Right_Panel = new JPanel();
 		Right_Panel.setOpaque(false);
 		Middle_Panel.add(Right_Panel);
@@ -119,19 +120,17 @@ public class Index extends JFrame {
 		initJFrame();
 	}
 
-
-
 	private void initJFrame() {
 		ClearScreenCenter();
 		JPanelLogin jLogin = new JPanelLogin(this);
 		Center_Content_Panel.add(jLogin);
 		jLogin.setVisible(true);
 	}
+
 	private void ClearScreenCenter() {
 		Center_Content_Panel.removeAll();
 		Center_Content_Panel.revalidate();
 		Center_Content_Panel.repaint();
 	}
-
 
 }

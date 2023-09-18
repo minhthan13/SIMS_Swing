@@ -8,9 +8,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import Entities.Employees;
 import Models.ConnectDB;
 
-
 public class EmailModel {
-	public Employees FindByEmail(String emailString ) {
+	public Employees FindByEmail(String emailString) {
 		Employees employees = null;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
@@ -40,11 +39,12 @@ public class EmailModel {
 		}
 		return employees;
 	}
-	public boolean ChangeVerifyCode(String email,String verifyCode) {
+
+	public boolean ChangeVerifyCode(String email, String verifyCode) {
 		boolean result = true;
 		try {
-			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"update employees set token = ? where email = ?");
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("update employees set token = ? where email = ?");
 			preparedStatement.setString(1, verifyCode);
 			preparedStatement.setString(2, email);
 			result = preparedStatement.executeUpdate() > 0;
@@ -57,11 +57,12 @@ public class EmailModel {
 		}
 		return result;
 	}
-	public boolean VerifyEmail(String email,String verifyCode) {
+
+	public boolean VerifyEmail(String email, String verifyCode) {
 		boolean result = true;
 		try {
-			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"update employees set status =true where email =? and token=?");
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("update employees set status =true where email =? and token=?");
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, verifyCode);
 			result = preparedStatement.executeUpdate() > 0;
@@ -74,11 +75,12 @@ public class EmailModel {
 		}
 		return result;
 	}
-	public boolean ChangePasswordByEmail(String email,String password) {
+
+	public boolean ChangePasswordByEmail(String email, String password) {
 		boolean result = true;
 		try {
-			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"update employees set password =? where email =?");
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("update employees set password =? where email =?");
 			preparedStatement.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
 			preparedStatement.setString(2, email);
 			result = preparedStatement.executeUpdate() > 0;

@@ -8,7 +8,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import Entities.Employees;
 import Models.ConnectDB;
 
-
 public class LoginModel {
 	public Employees Login(String usernameOrEmail, String password) {
 		Employees employee = null;

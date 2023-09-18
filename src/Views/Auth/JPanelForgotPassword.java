@@ -45,7 +45,6 @@ public class JPanelForgotPassword extends JPanel {
 	private JTextField jtextFieldNewPassword;
 	private JTextField jtextFieldConfirm;
 
-
 	/**
 	 * Create the panel.
 	 */
@@ -174,7 +173,6 @@ public class JPanelForgotPassword extends JPanel {
 		labelNewPass.setAlignmentX(0.5f);
 		jpanelNewPassword.add(labelNewPass);
 
-		
 		JPanel jpanelConfirmPassword = new JPanel();
 		jpanelConfirmPassword.setRequestFocusEnabled(false);
 		jpanelConfirmPassword.setOpaque(false);
@@ -187,7 +185,7 @@ public class JPanelForgotPassword extends JPanel {
 		labelConfirm.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		labelConfirm.setAlignmentX(0.5f);
 		jpanelConfirmPassword.add(labelConfirm);
-		
+
 		JPanel jpanelButton = new JPanel();
 		jpanelButton.setOpaque(false);
 		jpanelButton.setBorder(new EmptyBorder(1, 0, 0, 0));
@@ -233,31 +231,31 @@ public class JPanelForgotPassword extends JPanel {
 		jpanelConfirm.setPreferredSize(new Dimension(260, 25));
 		jpanelConfirmPassword.add(jpanelConfirm);
 		jpanelConfirm.setLayout(new BoxLayout(jpanelConfirm, BoxLayout.LINE_AXIS));
-		
+
 		jtextFieldConfirm = new JTextField();
 		jtextFieldConfirm.setDisabledTextColor(Color.DARK_GRAY);
 		jtextFieldConfirm.setEnabled(false);
 		jtextFieldConfirm.setColumns(16);
 		jpanelConfirm.add(jtextFieldConfirm);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setRequestFocusEnabled(false);
 		lblNewLabel_1.setPreferredSize(new Dimension(35, 25));
 		jpanelConfirm.add(lblNewLabel_1);
 		labelNewPass.setForeground(StyleColor.TitleColor());
-		
+
 		JPanel jpanelTextNew = new JPanel();
 		jpanelTextNew.setOpaque(false);
 		jpanelTextNew.setPreferredSize(new Dimension(260, 25));
 		jpanelNewPassword.add(jpanelTextNew);
 		jpanelTextNew.setLayout(new BoxLayout(jpanelTextNew, BoxLayout.LINE_AXIS));
-		
+
 		jtextFieldNewPassword = new JTextField();
 		jtextFieldNewPassword.setDisabledTextColor(Color.DARK_GRAY);
 		jtextFieldNewPassword.setEnabled(false);
 		jpanelTextNew.add(jtextFieldNewPassword);
 		jtextFieldNewPassword.setColumns(16);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setPreferredSize(new Dimension(35, 25));
 		lblNewLabel.setRequestFocusEnabled(false);
@@ -271,22 +269,19 @@ public class JPanelForgotPassword extends JPanel {
 		// set color
 		setBackground(StyleColor.FormColor());
 		jpanelFormCode.setBackground(StyleColor.FormColor());
-		
+
 		// set label color
 		jlabelForgot.setForeground(StyleColor.TitleColor());
 		labelEmail.setForeground(StyleColor.TitleColor());
 		labelVerifyCode.setForeground(StyleColor.TitleColor());
 		labelConfirm.setForeground(StyleColor.TitleColor());
-		
-		
+
 		// set btn
-		
+
 		jbtnSave.setBackground(StyleColor.BtnBackground());
 		jbtnSave.setRolloverEnabled(false);
 		jbtnCancel.setBackground(StyleColor.BtnBackground());
 		jbtnCancel.setRolloverEnabled(false);
-		
-		
 
 	}
 
@@ -310,7 +305,7 @@ public class JPanelForgotPassword extends JPanel {
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		
+
 		WaitingCursor.setDefaultCursor(jIconSendMail);
 	}
 
@@ -325,13 +320,11 @@ public class JPanelForgotPassword extends JPanel {
 			jtextFieldCode.setBorder(null);
 			jtextFieldCode.setEnabled(false);
 			jtextFieldCode.setRequestFocusEnabled(false);
-			
+
 			jtextFieldNewPassword.setEnabled(true);
 			jtextFieldConfirm.setEnabled(true);
 			jtextFieldNewPassword.requestFocus();
-		
-			
-			
+
 		} else {
 			JOptionPane.showMessageDialog(null, "Invalid Verify Code !!", "Failed", JOptionPane.WARNING_MESSAGE);
 		}
