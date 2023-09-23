@@ -472,6 +472,7 @@ public class JPanelRegister extends JPanel {
 		add(Bottom_Fix);
 		Bottom_Fix.setLayout(new BorderLayout(0, 0));
 		ButtonBrowse = new JLabel("Browse");
+		ButtonBrowse.setOpaque(true);
 		ButtonBrowse.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		ButtonBrowse.addMouseListener(new MouseAdapter() {
 			@Override

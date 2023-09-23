@@ -10,7 +10,7 @@ public class Invoice_detail {
 	private double product_price;
 	private double product_quantity;
 	private boolean is_discount;
-	private double discount_amount;
+	private int discount_percent;
 	private boolean is_returned;
 	private Timestamp created_at;
 
@@ -62,12 +62,12 @@ public class Invoice_detail {
 		this.is_discount = is_discount;
 	}
 
-	public double getDiscount_amount() {
-		return discount_amount;
+	public int getDiscount_percent() {
+		return discount_percent;
 	}
 
-	public void setDiscount_amount(double discount_amount) {
-		this.discount_amount = discount_amount;
+	public void setDiscount_percent(int discount_percent) {
+		this.discount_percent = discount_percent;
 	}
 
 	public boolean isIs_returned() {
@@ -87,7 +87,7 @@ public class Invoice_detail {
 	}
 
 	public Invoice_detail(int id, String product_code, String invoice_id, double product_price, double product_quantity,
-			boolean is_discount, double discount_amount, boolean is_returned, Timestamp created_at) {
+			boolean is_discount, int discount_percent, boolean is_returned, Timestamp created_at) {
 		super();
 		this.id = id;
 		this.product_code = product_code;
@@ -95,7 +95,7 @@ public class Invoice_detail {
 		this.product_price = product_price;
 		this.product_quantity = product_quantity;
 		this.is_discount = is_discount;
-		this.discount_amount = discount_amount;
+		this.discount_percent = discount_percent;
 		this.is_returned = is_returned;
 		this.created_at = created_at;
 	}
@@ -108,7 +108,7 @@ public class Invoice_detail {
 	public String toString() {
 		return "Invoice_detail [id=" + id + ", product_code=" + product_code + ", invoice_id=" + invoice_id
 				+ ", product_price=" + product_price + ", product_quantity=" + product_quantity + ", is_discount="
-				+ is_discount + ", discount_amount=" + discount_amount + ", is_returned=" + is_returned
+				+ is_discount + ", discount_amount=" + discount_percent + ", is_returned=" + is_returned
 				+ ", created_at=" + created_at + "]";
 	}
 

@@ -272,7 +272,7 @@ public class JPanelLogin extends JPanel {
 			if (parentWindow instanceof javax.swing.JFrame) {
 				((javax.swing.JFrame) parentWindow).dispose();
 			}
-			JFrameDashBoard jFrameDashBoard = new JFrameDashBoard();
+			JFrameDashBoard jFrameDashBoard = new JFrameDashBoard(employee.getEmployee_id());
 			this.setVisible(false);
 			jFrameDashBoard.setVisible(true);
 		} else {

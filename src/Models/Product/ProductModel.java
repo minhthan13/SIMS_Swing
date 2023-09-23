@@ -1,6 +1,7 @@
 package Models.Product;
 
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,20 +48,20 @@ public class ProductModel {
 		Products products = null;
 		try {
 			PreparedStatement prepareStatement = ConnectDB.connection()
-					.prepareStatement("select * from products where product_code = ?");
-			prepareStatement.setString(1, product_code);
+					.prepareStatement("select * from products where product_code like ?");
+			prepareStatement.setString(1, product_code + "%");
 			ResultSet resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
-				Products product = new Products();
-				product.setProduct_code(resultSet.getString("product_code"));
-				product.setName(resultSet.getString("name"));
-				product.setPrice(resultSet.getDouble("price"));
-				product.setQuantity(resultSet.getDouble("quantity"));
-				product.setImage(resultSet.getBytes("image"));
-				product.setDiscount_percent(resultSet.getInt("discount_percent"));
-				product.setDisable(resultSet.getBoolean("disable"));
-				product.setCreated_at(resultSet.getDate("created_at"));
-				product.setUnit_id(resultSet.getInt("unit_id"));
+				products = new Products();
+				products.setProduct_code(resultSet.getString("product_code"));
+				products.setName(resultSet.getString("name"));
+				products.setPrice(resultSet.getDouble("price"));
+				products.setQuantity(resultSet.getDouble("quantity"));
+				products.setImage(resultSet.getBytes("image"));
+				products.setDiscount_percent(resultSet.getInt("discount_percent"));
+				products.setDisable(resultSet.getBoolean("disable"));
+				products.setCreated_at(resultSet.getDate("created_at"));
+				products.setUnit_id(resultSet.getInt("unit_id"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,4 +146,42 @@ public class ProductModel {
 		return statusUpdate;
 	}
 
+	public List<Products> findbyname(String keyword) {
+		List<Products> products = new ArrayList<>();
+		Connection connection = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM products WHERE name LIKE ?");
+			preparedStatement.setString(1, keyword + "%");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Products product = new Products();
+				product.setProduct_code(resultSet.getString("product_code"));
+				product.setName(resultSet.getString("name"));
+				product.setPrice(resultSet.getDouble("price"));
+				product.setQuantity(resultSet.getDouble("quantity"));
+				product.setImage(resultSet.getBytes("image"));
+				product.setDiscount_percent(resultSet.getInt("discount_percent"));
+				product.setDisable(resultSet.getBoolean("disable"));
+				product.setCreated_at(resultSet.getDate("created_at"));
+				product.setUnit_id(resultSet.getInt("unit_id"));
+				;
+				products.add(product);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return products;
+
+	}
 }

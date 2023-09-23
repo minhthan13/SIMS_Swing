@@ -19,7 +19,7 @@ public class InvoiceDetailModel {
 			prepareStatement.setDouble(3, invoice_detail.getProduct_price());
 			prepareStatement.setDouble(4, invoice_detail.getProduct_quantity());
 			prepareStatement.setBoolean(5, invoice_detail.isIs_discount());
-			prepareStatement.setDouble(6, invoice_detail.getDiscount_amount());
+			prepareStatement.setDouble(6, invoice_detail.getDiscount_percent());
 			prepareStatement.setBoolean(7, invoice_detail.isIs_returned());
 			prepareStatement.setTimestamp(8, invoice_detail.getCreated_at());
 			result = prepareStatement.executeUpdate() > 0;

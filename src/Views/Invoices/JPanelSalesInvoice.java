@@ -122,7 +122,7 @@ public class JPanelSalesInvoice extends JPanel {
 		panelList = new JPanel();
 		panelList.setPreferredSize(new Dimension(500, 500));
 		scrollPane_1.setViewportView(panelList);
-		panelList.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
+		panelList.setLayout(new BoxLayout(panelList, BoxLayout.X_AXIS));
 
 		jpanelInformation = new JPanel();
 		jpanelInformation

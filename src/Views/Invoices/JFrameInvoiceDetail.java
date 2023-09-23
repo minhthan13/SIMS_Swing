@@ -291,12 +291,11 @@ public class JFrameInvoiceDetail extends JFrame {
 			double product_price = (double) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Price"));
 			double product_quantity = (double) tableBuyItem.getValueAt(i,
 					getColumnIndexByName(tableBuyItem, "Quantity"));
-			double product_Discount = (double) tableBuyItem.getValueAt(i,
-					getColumnIndexByName(tableBuyItem, "Discount"));
+			int product_Discount = (int) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Discount"));
 			Invoice_detail invoiceDetail = new Invoice_detail();
 			invoiceDetail.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
 			invoiceDetail.setProduct_price(product_price);
-			invoiceDetail.setDiscount_amount(product_Discount);
+			invoiceDetail.setDiscount_percent(product_Discount);
 			invoiceDetail.setProduct_quantity(product_quantity);
 			invoiceDetail.setIs_returned(false);
 			invoiceDetail.setIs_discount(product_Discount > 0 ? true : false);
