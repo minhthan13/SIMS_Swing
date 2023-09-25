@@ -62,7 +62,7 @@ public class Product_Detail extends JPanel {
 		add(jpanelImage);
 		jpanelImage.setLayout(new BoxLayout(jpanelImage, BoxLayout.X_AXIS));
 
-		lblImage = new JLabel("");	
+		lblImage = new JLabel("");
 		lblImage.setPreferredSize(new Dimension(200, 150));
 		lblImage.setMinimumSize(new Dimension(200, 150));
 		lblImage.setMaximumSize(new Dimension(200, 150));
@@ -133,7 +133,11 @@ public class Product_Detail extends JPanel {
 		lblImage.setIcon(scaledImageIcon);
 		jlabelProductname.setText(buyProduct.getName());
 		jlabelCost.setText(Double.toString(buyProduct.getPrice()));
-		jlabelQuantyti.setText(Double.toString(buyProduct.getQuantity()));
+		if (buyProduct.getQuantity() <= 0) {
+			jlabelQuantyti.setText("Out of stock");
+		} else {
+			jlabelQuantyti.setText(Double.toString(buyProduct.getQuantity()));
+		}
 
 		// Kiểm tra giảm giá
 		if (String.valueOf(buyProduct.getDiscount_percent()).equals("") || buyProduct.getDiscount_percent() == 0) {
@@ -147,10 +151,13 @@ public class Product_Detail extends JPanel {
 			Double totalprice = buyProduct.getPrice() - resultDouble;
 			JpanelDiscount.setText(Double.toString(totalprice));
 		}
-		
+
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (jlabelQuantyti.getText().equalsIgnoreCase("Out of stock")) {
+					return;
+				}
 				JPanelSalesInvoice.getBuyProductInformation(buyProduct);
 			}
 		});

@@ -11,6 +11,7 @@ import Models.CSS.StyleColor;
 import Models.Employees.EmployeeModel;
 import Views.Index;
 import Views.Employees.JPanelChangePassword;
+import Views.Employees.JPanelInformation;
 import Views.Invoices.JPanelInvoices;
 import Views.Product.AddProduct;
 import Views.Product.JPanelProduct;
@@ -76,7 +77,6 @@ public class JFrameDashBoard extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
 
 	public static void main(String[] args) {
 		try {
@@ -120,6 +120,11 @@ public class JFrameDashBoard extends JFrame {
 		menuBar.add(jMenuUser);
 
 		JMenuItem jMenuItemInformation = new JMenuItem("Information");
+		jMenuItemInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jMenuItemInformation_actionPerformed(e);
+			}
+		});
 		jMenuUser.add(jMenuItemInformation);
 
 		JMenuItem jMenuItemChangePassword = new JMenuItem("Change Password");
@@ -158,7 +163,8 @@ public class JFrameDashBoard extends JFrame {
 		JPanel jpanelLeft = new JPanel();
 		jpanelLeft.setOpaque(false);
 		jpanelLeft.setPreferredSize(new Dimension(180, 0));
-		jpanelLeft.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(100, 149, 237), new Color(135, 206, 235), new Color(100, 149, 237), new Color(135, 206, 235)));
+		jpanelLeft.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(100, 149, 237), new Color(135, 206, 235),
+				new Color(100, 149, 237), new Color(135, 206, 235)));
 		JPanelContentDashboard.add(jpanelLeft, BorderLayout.WEST);
 
 		jbtnInventory = new JButton("Kho Hang -1,2");
@@ -213,7 +219,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnInformManager = new JButton("Thong bao qly -1");
 		jbtnInformManager.setForeground(new Color(102, 0, 102));
-		jbtnInformManager.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnInformManager
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnInformManager.setMaximumSize(new Dimension(150, 35));
 		jbtnInformManager.setSize(new Dimension(150, 25));
 		jbtnInformManager.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -245,7 +252,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnSaleRequest = new JButton("yeu cau - 2,3");
 		jbtnSaleRequest.setForeground(new Color(102, 0, 102));
-		jbtnSaleRequest.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnSaleRequest
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnSaleRequest.setMaximumSize(new Dimension(150, 35));
 		jbtnSaleRequest.setSize(new Dimension(150, 25));
 		jbtnSaleRequest.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -261,7 +269,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnValidateInventory = new JButton("Xac thuc ton kho - 2");
 		jbtnValidateInventory.setForeground(new Color(102, 0, 102));
-		jbtnValidateInventory.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnValidateInventory
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnValidateInventory.setMaximumSize(new Dimension(150, 35));
 		jbtnValidateInventory.setSize(new Dimension(150, 25));
 		jbtnValidateInventory.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -277,7 +286,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnReportInventory = new JButton("Bao cao -2 ");
 		jbtnReportInventory.setForeground(new Color(102, 0, 102));
-		jbtnReportInventory.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnReportInventory
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnReportInventory.setMaximumSize(new Dimension(150, 35));
 		jbtnReportInventory.setSize(new Dimension(150, 25));
 		jbtnReportInventory.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -293,7 +303,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnInventoryTrends = new JButton("Thong ke - 2");
 		jbtnInventoryTrends.setForeground(new Color(102, 0, 102));
-		jbtnInventoryTrends.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnInventoryTrends
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnInventoryTrends.setMaximumSize(new Dimension(150, 35));
 		jbtnInventoryTrends.setSize(new Dimension(150, 25));
 		jbtnInventoryTrends.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -309,7 +320,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnInvoiceToday = new JButton("hoa don  -3");
 		jbtnInvoiceToday.setForeground(new Color(102, 0, 102));
-		jbtnInvoiceToday.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnInvoiceToday
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnInvoiceToday.setMaximumSize(new Dimension(150, 35));
 		jbtnInvoiceToday.setSize(new Dimension(150, 25));
 		jbtnInvoiceToday.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -325,7 +337,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnTransaction = new JButton("giao dich - 3");
 		jbtnTransaction.setForeground(new Color(102, 0, 102));
-		jbtnTransaction.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnTransaction
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnTransaction.setMaximumSize(new Dimension(150, 35));
 		jbtnTransaction.setSize(new Dimension(150, 25));
 		jbtnTransaction.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -341,7 +354,8 @@ public class JFrameDashBoard extends JFrame {
 
 		jbtnReturnedToday = new JButton("Hang tra ve - 3");
 		jbtnReturnedToday.setForeground(new Color(102, 0, 102));
-		jbtnReturnedToday.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnReturnedToday
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnReturnedToday.setMaximumSize(new Dimension(150, 35));
 		jbtnReturnedToday.setSize(new Dimension(150, 25));
 		jbtnReturnedToday.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -378,7 +392,8 @@ public class JFrameDashBoard extends JFrame {
 			}
 		});
 		jbtnAddProductCategory.setForeground(new Color(102, 0, 102));
-		jbtnAddProductCategory.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
+		jbtnAddProductCategory
+				.setFont(new Font("MesloLGM Nerd Font Mono", jbtnInventory.getFont().getStyle() | Font.BOLD, 14));
 		jbtnAddProductCategory.setMaximumSize(new Dimension(150, 35));
 		jbtnAddProductCategory.setSize(new Dimension(150, 25));
 		jbtnAddProductCategory.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -391,11 +406,10 @@ public class JFrameDashBoard extends JFrame {
 		jpanelLeft.add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		
-
 		jpanelContent = new JPanel();
 		jpanelContent.setOpaque(false);
-		jpanelContent.setBorder(new CompoundBorder(new LineBorder(new Color(135, 206, 250), 5, true), new LineBorder(new Color(100, 149, 237), 3)));
+		jpanelContent.setBorder(new CompoundBorder(new LineBorder(new Color(135, 206, 250), 5, true),
+				new LineBorder(new Color(100, 149, 237), 3)));
 		JPanelContentDashboard.add(jpanelContent, BorderLayout.CENTER);
 		jpanelContent.setLayout(new BoxLayout(jpanelContent, BoxLayout.X_AXIS));
 
@@ -414,10 +428,6 @@ public class JFrameDashBoard extends JFrame {
 		jbtnReturnedToday.setBackground(StyleColor.BtnBackground());
 		jbtnSalesTrend.setBackground(StyleColor.BtnBackground());
 		jbtnAddProductCategory.setBackground(StyleColor.BtnBackground());
-		
-		
-
-		
 
 	}
 
@@ -461,31 +471,39 @@ public class JFrameDashBoard extends JFrame {
 		int id = employeeId;
 		return id;
 	}
+
 	public void jbtnAddProductCategory_actionPerformed(ActionEvent e) {
 		clearScreen();
 		AddProduct addProduct = new AddProduct();
 		jpanelContent.setVisible(true);
 		jpanelContent.add(addProduct);
 	}
-	
-	
+
 	// menu logout
 	public void jMenuItemLogout_actionPerformed(ActionEvent e) {
 		Index index = new Index();
 		setVisible(false);
 		index.setVisible(true);
 	}
-	
+	// change password
 	public void jMenuItemChangePassword_actionPerformed(ActionEvent e) {
-
 		JDialog jChangePasswordDialog = new JDialog(this, "Change Password", true);
-        JPanelChangePassword jChangePassword = new JPanelChangePassword(employeeId);
-        jChangePasswordDialog.getContentPane().add(jChangePassword);
-        jChangePasswordDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        jChangePasswordDialog.pack();
-        jChangePasswordDialog.setLocationRelativeTo(this);
-        jChangePasswordDialog.setVisible(true);
+		JPanelChangePassword jChangePassword = new JPanelChangePassword(employeeId);
+		jChangePasswordDialog.getContentPane().add(jChangePassword);
+		jChangePasswordDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		jChangePasswordDialog.pack();
+		jChangePasswordDialog.setLocationRelativeTo(this);
+		jChangePasswordDialog.setVisible(true);
+	}
+	// edit infor
+	public void jMenuItemInformation_actionPerformed(ActionEvent e) {
+		JDialog jinformationDialog = new JDialog(this,"Information",true);
+		JPanelInformation jPanelInformation = new JPanelInformation();
+		jinformationDialog.getContentPane().add(jPanelInformation);
+		jinformationDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		jinformationDialog.pack();
+		jinformationDialog.setLocationRelativeTo(this);
+		jinformationDialog.setVisible(true);
 	}
 
 }
-

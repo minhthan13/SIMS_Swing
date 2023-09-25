@@ -1,12 +1,11 @@
 package Views.Invoices;
 
 import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
+
+import Entities.Invoice_detail;
 import Entities.Products;
 import Models.Product.ProductModel;
 import Views.Product.Product_Detail;
@@ -14,15 +13,21 @@ import Views.Product.Product_Detail;
 import javax.swing.border.TitledBorder;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
+import java.awt.Component;
 
 public class JPanelSalesInvoice extends JPanel {
 	private ProductModel productModel = new ProductModel();
@@ -30,63 +35,8 @@ public class JPanelSalesInvoice extends JPanel {
 	private static JPanel jpanelInformation;
 	private static Products selectedProduct = new Products();
 	private static List<JPanel> informationPanels = new ArrayList<>();
-
-	public class BuyProductInfo {
-		private String buyProductId;
-		private String buyProductName;
-		private double quantity;
-		private double price;
-		private double discount;
-
-		public String getBuyProductId() {
-			return buyProductId;
-		}
-
-		public void setBuyProductId(String buyProductId) {
-			this.buyProductId = buyProductId;
-		}
-
-		public String getBuyProductName() {
-			return buyProductName;
-		}
-
-		public void setBuyProductName(String buyProductName) {
-			this.buyProductName = buyProductName;
-		}
-
-		public double getQuantity() {
-			return quantity;
-		}
-
-		public void setQuantity(int quantity) {
-			this.quantity = quantity;
-		}
-
-		public double getPrice() {
-			return price;
-		}
-
-		public void setPrice(double price) {
-			this.price = price;
-		}
-
-		public double getDiscount() {
-			return discount;
-		}
-
-		public void setDiscount(int discount) {
-			this.discount = discount;
-		}
-
-		public BuyProductInfo(String buyProductId, String buyProductName, int quantity, double price, double discount) {
-			super();
-			this.buyProductId = buyProductId;
-			this.buyProductName = buyProductName;
-			this.quantity = quantity;
-			this.price = price;
-			this.discount = discount;
-		}
-	}
+	private static JDialog dialog = new JDialog();
+	private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
 	/**
 	 * Create the panel.
@@ -94,57 +44,33 @@ public class JPanelSalesInvoice extends JPanel {
 	public JPanelSalesInvoice() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane);
-
 		JPanel panel = new JPanel();
-		scrollPane.setViewportView(panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 0, 0 };
-		gbl_panel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		panel.setLayout(gbl_panel);
+		this.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "List", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 0;
-		panel.add(panel_1, gbc_panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		JPanel panelShowList = new JPanel();
+		panelShowList.setBorder(new TitledBorder(null, "List", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.add(panelShowList);
+		panelShowList.setLayout(new BoxLayout(panelShowList, BoxLayout.X_AXIS));
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		panel_1.add(scrollPane_1, BorderLayout.CENTER);
+		panelShowList.add(scrollPane_1);
 
 		panelList = new JPanel();
-		panelList.setPreferredSize(new Dimension(500, 500));
+		panelList.setPreferredSize(new Dimension(1100, 1600));
 		scrollPane_1.setViewportView(panelList);
-		panelList.setLayout(new BoxLayout(panelList, BoxLayout.X_AXIS));
+		panelList.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 
 		jpanelInformation = new JPanel();
 		jpanelInformation
 				.setBorder(new TitledBorder(null, "information", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_jpanelInformation = new GridBagConstraints();
-		gbc_jpanelInformation.insets = new Insets(0, 0, 5, 0);
-		gbc_jpanelInformation.fill = GridBagConstraints.BOTH;
-		gbc_jpanelInformation.gridx = 0;
-		gbc_jpanelInformation.gridy = 1;
-		panel.add(jpanelInformation, gbc_jpanelInformation);
+		panel.add(jpanelInformation);
 		jpanelInformation.setLayout(new BoxLayout(jpanelInformation, BoxLayout.PAGE_AXIS));
 
+
 		JPanel panel_4 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_4.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
-		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_4.anchor = GridBagConstraints.SOUTH;
-		gbc_panel_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel_4.gridx = 0;
-		gbc_panel_4.gridy = 2;
-		panel.add(panel_4, gbc_panel_4);
+		panel_4.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		panel.add(panel_4);
 
 		JButton jbtnProceed = new JButton("Proceed");
 		jbtnProceed.addActionListener(new ActionListener() {
@@ -152,39 +78,80 @@ public class JPanelSalesInvoice extends JPanel {
 				jbtnProceed_actionPerformed(e);
 			}
 		});
+		panel_4.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 5));
 
 		panel_4.add(jbtnProceed);
+
+		JPanel panel_1 = new JPanel();
+		panel.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
 
 		initProductCard();
 	}
 
 	public void jbtnProceed_actionPerformed(ActionEvent e) {
 		// Create a list to store BuyProductInfo objects
-		List<BuyProductInfo> buyProducts = new ArrayList<BuyProductInfo>();
+		List<Invoice_detail> buyProducts = new ArrayList<Invoice_detail>();
 		// Iterate through the information panels
 		for (JPanel infoPanel : informationPanels) {
 			// Extract code, quantity, and product ID from the info panel
-			JLabel buyproductID = (JLabel) infoPanel.getComponent(4);
-			JTextField nameField = (JTextField) infoPanel.getComponent(1);
+			JLabel productID = (JLabel) infoPanel.getComponent(4);
 			JTextField quantityField = (JTextField) infoPanel.getComponent(3);
 			JLabel priceLabel = (JLabel) infoPanel.getComponent(5);
 			JLabel discountLabel = (JLabel) infoPanel.getComponent(6);
+			JLabel stockedProductQuantity = (JLabel) infoPanel.getComponent(7);
 			// Get the values
-			String id = buyproductID.getText();
-			String name = nameField.getText();
-			int quantity = Integer.parseInt(quantityField.getText());
+			String id = productID.getText();
+			double stocked = Double.parseDouble(stockedProductQuantity.getText());
 			double price = Double.parseDouble(priceLabel.getText());
-			double discount = Double.parseDouble(discountLabel.getText());
+			int discount = (int) Double.parseDouble(discountLabel.getText());
+			// Check if the input in quantityField is not numeric
+			if (!isNumeric(quantityField.getText())) {
+				JOptionPane.showMessageDialog(null, "Invalid Quantity");
+				quantityField.requestFocus();
+				return;
+			}
+			// Parse the quantity as a double, rounding it to two decimal places
+			double quantity = Double.parseDouble(decimalFormat.format(Double.parseDouble(quantityField.getText())));
+			// Check if the quantity is greater than the stocked quantity or less than or equal to 0
+			if (quantity > stocked || quantity <= 0) {
+				JOptionPane.showMessageDialog(null, "Invalid Quantity");
+				quantityField.requestFocus();
+				return;
+			}			
 			// Create a BuyProductInfo object and add it to the list
-			BuyProductInfo buyProductInfo = new BuyProductInfo(id, name, quantity, price, discount);
-			buyProducts.add(buyProductInfo);
+			Invoice_detail invoiceDetail = new Invoice_detail();
+			invoiceDetail.setId(0);
+			invoiceDetail.setProduct_code(id);
+			invoiceDetail.setInvoice_id("");
+			invoiceDetail.setProduct_price(price);
+			invoiceDetail.setProduct_quantity(quantity);
+			invoiceDetail.setIs_discount(discount > 0 ? true : false);
+			invoiceDetail.setDiscount_percent(discount);
+			invoiceDetail.setReturned(false);
+			invoiceDetail.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
+
+			buyProducts.add(invoiceDetail);
 		}
+
 		if (buyProducts.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "NO PRODUCT");
+			JOptionPane.showMessageDialog(null, "No Product");
+			return;
 		} else {
-			JFrameInvoiceDetail invoiceDetail = new JFrameInvoiceDetail(buyProducts);
-			invoiceDetail.setVisible(getFocusTraversalKeysEnabled());
+			// Create a modal dialog to display the invoice detail frame
+			dialog = new JDialog();
+			dialog.setTitle("Invoice Detail");
+			dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+			JFrameInvoiceDetail invoiceDetail = new JFrameInvoiceDetail(buyProducts, null);
+			dialog.getContentPane().add(invoiceDetail.getContentPane());
+			dialog.pack();
+			dialog.setVisible(true);
 		}
+	}
+
+	public static void dispose() {
+		dialog.dispose();
 	}
 
 	private void initProductCard() {
@@ -207,14 +174,15 @@ public class JPanelSalesInvoice extends JPanel {
 			if (selectedProduct.getProduct_code().equals(buyProductId.getText())) {
 				// If found, increase the quantity by 1
 				JTextField quantityField = (JTextField) infoPanel.getComponent(3);
-				int quantity = Integer.parseInt(quantityField.getText());
+				double quantity = Double.parseDouble(quantityField.getText());
 				quantity++;
-				quantityField.setText(Integer.toString(quantity));
+				quantityField.setText(Double.toString(quantity));
 				return; // Exit the method
 			}
 		}
 		// Create a new panel for the selected product
 		JPanel panelBuyProductItem = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelBuyProductItem.setPreferredSize(new Dimension(400, 50));
 		// Create labels, text fields, buttons, and a hidden label for product ID
 		JLabel buyProductNameLabel = new JLabel("Name:");
 		JTextField buyProductNameTextField = new JTextField(selectedProduct.getName());
@@ -228,9 +196,11 @@ public class JPanelSalesInvoice extends JPanel {
 		JLabel buyProductId = new JLabel(selectedProduct.getProduct_code());
 		JLabel buyProductPrice = new JLabel(String.valueOf(selectedProduct.getPrice()));
 		JLabel buyProductDiscount = new JLabel(String.valueOf(selectedProduct.getDiscount_percent()));
+		JLabel buyProductQuantity = new JLabel(String.valueOf(selectedProduct.getQuantity()));
 		buyProductId.setVisible(false);
 		buyProductPrice.setVisible(false);
 		buyProductDiscount.setVisible(false);
+		buyProductQuantity.setVisible(false);
 		// Add components to the panel
 		panelBuyProductItem.add(buyProductNameLabel);
 		panelBuyProductItem.add(buyProductNameTextField);
@@ -239,27 +209,39 @@ public class JPanelSalesInvoice extends JPanel {
 		panelBuyProductItem.add(buyProductId);
 		panelBuyProductItem.add(buyProductPrice);
 		panelBuyProductItem.add(buyProductDiscount);
+		panelBuyProductItem.add(buyProductQuantity);
 		panelBuyProductItem.add(button1);
 		panelBuyProductItem.add(button2);
 		panelBuyProductItem.add(button3);
 		// Add action listeners for the +, -, and x buttons
 		button1.addActionListener(e -> {
-			int value = Integer.parseInt(quantityTextField.getText());
+			if (!isNumeric(quantityTextField.getText())) {
+				JOptionPane.showMessageDialog(null, "Invalid Quantity");
+				quantityTextField.requestFocusInWindow();
+				return;
+			}
+			double value = Double.parseDouble(quantityTextField.getText());
 			value++;
-			quantityTextField.setText(Integer.toString(value));
+			quantityTextField.setText(decimalFormat.format(value));
 		});
 
 		button2.addActionListener(e -> {
-			int value = Integer.parseInt(quantityTextField.getText());
+			if (!isNumeric(quantityTextField.getText())) {
+				JOptionPane.showMessageDialog(null, "Invalid Quantity");
+				quantityTextField.requestFocusInWindow();
+				return;
+			}
+			double value = Double.parseDouble(quantityTextField.getText());
 			if (value > 1) {
 				value--;
-				quantityTextField.setText(Integer.toString(value));
+				quantityTextField.setText(decimalFormat.format(value));
 			}
 		});
 
 		button3.addActionListener(e -> {
 			// Remove the panel from jpanelInformation
 			jpanelInformation.remove(panelBuyProductItem);
+			informationPanels.remove(panelBuyProductItem);
 			// Revalidate and repaint jpanelInformation to update the UI
 			jpanelInformation.revalidate();
 			jpanelInformation.repaint();
@@ -281,5 +263,17 @@ public class JPanelSalesInvoice extends JPanel {
 		jpanelInformation.revalidate();
 		jpanelInformation.repaint();
 	}
-
+	
+	//Checks if a given string represents a numeric value.
+	private static boolean isNumeric(String string) {
+		if (string == null || string.isEmpty()) {
+			return false;
+		}
+		try {
+			double d = Double.parseDouble(string);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
 }

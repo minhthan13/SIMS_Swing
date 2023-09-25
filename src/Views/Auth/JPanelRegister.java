@@ -515,10 +515,14 @@ public class JPanelRegister extends JPanel {
 	private void initPanel() {
 		PositionModel positionModel = new PositionModel();
 		DefaultComboBoxModel<Positons> model = new DefaultComboBoxModel<Positons>();
-
-		for (Positons positons : positionModel.ShowPosition()) {
-			model.addElement(positons);
-		}
+		boolean isFirstItem = true;
+		 for (Positons positons : positionModel.ShowPosition()) {
+		        if (isFirstItem) {
+		            isFirstItem = false;
+		            continue;
+		        }
+		        model.addElement(positons);
+		    }
 		jcomboBoxPositions.setModel(model);
 		jcomboBoxPositions.setRenderer(new PositionsBox());
 

@@ -5,15 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.protocol.x.ReusableOutputStream;
 
 import Entities.Categories;
 import Entities.Product_category;
-import Entities.Products;
 import Models.ConnectDB;
 
 public class CategoriesModel {

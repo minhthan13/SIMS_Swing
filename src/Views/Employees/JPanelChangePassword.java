@@ -242,6 +242,7 @@ public class JPanelChangePassword extends JPanel {
 		}
 	}
 	public void jbtnCancel_actionPerformed(ActionEvent e) {
+		ClearScreen();
 		closeDialog();
 	}
 	private void closeDialog() {
@@ -251,6 +252,11 @@ public class JPanelChangePassword extends JPanel {
             dialog.dispose();
         }
 	}
-	
+	private void ClearScreen() {
+		removeAll();
+		revalidate();
+		this.setOpaque(false);
+		repaint();
+	}
 
 }

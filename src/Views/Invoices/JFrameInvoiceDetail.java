@@ -5,8 +5,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,33 +18,47 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
+import javax.swing.JDialog;
+import Entities.Customers;
 import Entities.Invoice;
 import Entities.Invoice.Payment_method;
 import Entities.Invoice_detail;
+import Models.Customer.CustomerModel;
 import Models.Invoice.InvoiceDetailModel;
 import Models.Invoice.InvoiceModel;
-import Views.Invoices.JPanelSalesInvoice.BuyProductInfo;
-
+import Models.Product.ProductModel;
+import Views.Customer.JFrameCustomer;
+import Views.Dashboard.JFrameDashBoard;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class JFrameInvoiceDetail extends JFrame {
 
@@ -48,15 +66,20 @@ public class JFrameInvoiceDetail extends JFrame {
 	private JTextField textFieldDeliveryLocation;
 	private JTextField textFieldNote;
 	private JTable tableBuyItem;
-	private List<BuyProductInfo> buyProducts = new ArrayList<>();
+	private List<Invoice_detail> buyProducts = new ArrayList<>();
 	private JTextField textFieldSubTotal;
 	private JComboBox comboBoxPaymentMethod;
 	private JDateChooser dateChooserDeliveryDate;
 	private JLabel lblCustomer;
-	private JTextField textFieldSupplier;
 	private JTextField textFieldCustomer;
-	private UUID invoiceId = UUID.randomUUID();
+	private UUID invoiceId;
 	private String message;
+	private JTextField textFieldEmail;
+	private static JDialog dialog = new JDialog();
+	private CustomerModel customerModel = new CustomerModel();
+	private Invoice invoice;
+	private JLabel lblNewCustomer;
+	private JButton btnPay;
 
 	/**
 	 * Launch the application.
@@ -115,45 +138,70 @@ public class JFrameInvoiceDetail extends JFrame {
 		GridBagLayout gbl_panelInfo = new GridBagLayout();
 		gbl_panelInfo.columnWidths = new int[] { 104, 73, 0, 75, 0, 0 };
 		gbl_panelInfo.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panelInfo.columnWeights = new double[] { 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panelInfo.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panelInfo.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panelInfo.setLayout(gbl_panelInfo);
 
+		JLabel lblNewLabel_1 = new JLabel("Email");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 0;
+		panelInfo.add(lblNewLabel_1, gbc_lblNewLabel_1);
+
+		textFieldEmail = new JTextField();
+		textFieldEmail.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				textFieldEmail_focusLost(e);
+			}
+		});
+		textFieldEmail.setText("");
+		GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
+		gbc_textFieldEmail.gridwidth = 3;
+		gbc_textFieldEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldEmail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldEmail.gridx = 1;
+		gbc_textFieldEmail.gridy = 0;
+		panelInfo.add(textFieldEmail, gbc_textFieldEmail);
+		textFieldEmail.setColumns(10);
+
+		lblNewCustomer = new JLabel("");
+		lblNewCustomer.setIcon(new ImageIcon(JFrameInvoiceDetail.class.getResource("/Resources/Icons/Add.png")));
+		lblNewCustomer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblNewCustomer_mouseClicked();
+			}
+		});
+		GridBagConstraints gbc_lblNewCustomer = new GridBagConstraints();
+		gbc_lblNewCustomer.anchor = GridBagConstraints.WEST;
+		gbc_lblNewCustomer.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewCustomer.gridx = 4;
+		gbc_lblNewCustomer.gridy = 0;
+		panelInfo.add(lblNewCustomer, gbc_lblNewCustomer);
+
 		lblCustomer = new JLabel("Customer");
+		lblCustomer.setVisible(false);
 		GridBagConstraints gbc_lblCustomer = new GridBagConstraints();
 		gbc_lblCustomer.anchor = GridBagConstraints.WEST;
 		gbc_lblCustomer.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCustomer.gridx = 0;
-		gbc_lblCustomer.gridy = 0;
+		gbc_lblCustomer.gridy = 1;
 		panelInfo.add(lblCustomer, gbc_lblCustomer);
 
 		textFieldCustomer = new JTextField();
+		textFieldCustomer.setFocusable(false);
+		textFieldCustomer.setVisible(false);
 		GridBagConstraints gbc_textFieldCustomer = new GridBagConstraints();
 		gbc_textFieldCustomer.gridwidth = 4;
-		gbc_textFieldCustomer.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldCustomer.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldCustomer.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldCustomer.gridx = 1;
-		gbc_textFieldCustomer.gridy = 0;
+		gbc_textFieldCustomer.gridy = 1;
 		panelInfo.add(textFieldCustomer, gbc_textFieldCustomer);
 		textFieldCustomer.setColumns(10);
-
-		JLabel lblSupplier = new JLabel("Supplier");
-		GridBagConstraints gbc_lblSupplier = new GridBagConstraints();
-		gbc_lblSupplier.anchor = GridBagConstraints.WEST;
-		gbc_lblSupplier.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSupplier.gridx = 0;
-		gbc_lblSupplier.gridy = 1;
-		panelInfo.add(lblSupplier, gbc_lblSupplier);
-
-		textFieldSupplier = new JTextField();
-		GridBagConstraints gbc_textFieldSupplier = new GridBagConstraints();
-		gbc_textFieldSupplier.gridwidth = 4;
-		gbc_textFieldSupplier.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldSupplier.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldSupplier.gridx = 1;
-		gbc_textFieldSupplier.gridy = 1;
-		panelInfo.add(textFieldSupplier, gbc_textFieldSupplier);
-		textFieldSupplier.setColumns(10);
 
 		JLabel lblDeliveryDate = new JLabel("Delivery Date");
 		GridBagConstraints gbc_lblDeliveryDate = new GridBagConstraints();
@@ -165,6 +213,7 @@ public class JFrameInvoiceDetail extends JFrame {
 
 		dateChooserDeliveryDate = new JDateChooser();
 		dateChooserDeliveryDate.setDateFormatString("dd-MM-yyyy");
+
 		GridBagConstraints gbc_dateChooserDeliveryDate = new GridBagConstraints();
 		gbc_dateChooserDeliveryDate.gridwidth = 4;
 		gbc_dateChooserDeliveryDate.insets = new Insets(0, 0, 5, 0);
@@ -218,7 +267,7 @@ public class JFrameInvoiceDetail extends JFrame {
 		panelInfo.add(lblPaymentMethod, gbc_lblPaymentMethod);
 
 		comboBoxPaymentMethod = new JComboBox();
-		comboBoxPaymentMethod.setModel(new DefaultComboBoxModel(Payment_method.values()));
+		comboBoxPaymentMethod.setModel(new DefaultComboBoxModel<>(Payment_method.values()));
 		comboBoxPaymentMethod.setSelectedIndex(0);
 		GridBagConstraints gbc_comboBoxPaymentMethod = new GridBagConstraints();
 		gbc_comboBoxPaymentMethod.insets = new Insets(0, 0, 5, 5);
@@ -227,7 +276,7 @@ public class JFrameInvoiceDetail extends JFrame {
 		gbc_comboBoxPaymentMethod.gridy = 5;
 		panelInfo.add(comboBoxPaymentMethod, gbc_comboBoxPaymentMethod);
 
-		JButton btnPay = new JButton("Pay");
+		btnPay = new JButton("Pay");
 		btnPay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnPay_actionPerformed(e);
@@ -253,61 +302,125 @@ public class JFrameInvoiceDetail extends JFrame {
 		panelInfo.add(btnCancel, gbc_btnCancel);
 	}
 
-	public JFrameInvoiceDetail(List<BuyProductInfo> buyProducts) {
+	public JFrameInvoiceDetail(List<Invoice_detail> buyProducts, Invoice invoice) {
 		this();
 		this.buyProducts = buyProducts;
+		this.invoice = invoice;
 		initJFrame();
-
 	}
 
 	private void initJFrame() {
-		fillDataToTable();
+		setReadable(invoice);
+		fillDataToTable(buyProducts);
 		calculateSubTotal();
 	}
 
-	public void btnCancel_actionPerformed(ActionEvent e) {
-		this.setVisible(false);
-	}
-
-	public void btnPay_actionPerformed(ActionEvent e) {
-		createInvoice();
-		createInvoiceDetail();
-		if (message.equalsIgnoreCase("Done!")) {
-			JOptionPane.showMessageDialog(null, message);
-			this.setVisible(false);
-		} else {
-			JOptionPane.showMessageDialog(null, message);
-		}
-
-	}
-
-	private void createInvoiceDetail() {
-		// Create an instance of Invoice_detail and invoice_detail_model
-		InvoiceDetailModel invoiceDetailModel = new InvoiceDetailModel();
-		// set attribute of invoice detail per row
+	public void test() {
+		List<Invoice_detail> returnLists = new ArrayList<Invoice_detail>();
 		for (int i = 0; i < tableBuyItem.getRowCount(); i++) {
-			String product_code = (String) tableBuyItem.getValueAt(i,
-					getColumnIndexByName(tableBuyItem, "productCode"));
-			double product_price = (double) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Price"));
-			double product_quantity = (double) tableBuyItem.getValueAt(i,
-					getColumnIndexByName(tableBuyItem, "Quantity"));
-			int product_Discount = (int) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Discount"));
-			Invoice_detail invoiceDetail = new Invoice_detail();
-			invoiceDetail.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
-			invoiceDetail.setProduct_price(product_price);
-			invoiceDetail.setDiscount_percent(product_Discount);
-			invoiceDetail.setProduct_quantity(product_quantity);
-			invoiceDetail.setIs_returned(false);
-			invoiceDetail.setIs_discount(product_Discount > 0 ? true : false);
-			invoiceDetail.setProduct_code(product_code);
-			invoiceDetail.setInvoice_id(invoiceId.toString());
-			// add to database
-			if (invoiceDetailModel.create(invoiceDetail)) {
-				message = "Done!";
-			} else {
-				message = "Failed!";
+			boolean isReturned = (boolean) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Return"));
+			if (isReturned) {
+				Invoice_detail returnItem = new Invoice_detail();
+
+				returnItem.setId((int) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "id")));
+				returnItem.setProduct_code(
+						(String) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "productCode")));
+				returnItem.setProduct_quantity(
+						(double) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Quantity")));
+				returnItem.setReturned(isReturned);
+				returnLists.add(returnItem);
 			}
 		}
+
+		// Create a modal dialog to display the invoice detail frame
+		if(returnLists.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Please check at least 1 product to return!");
+			return;
+		}
+		// Set the parent component as 'this' (the current JFrame)
+	    JDialog dialog = new JDialog(this); // Pass 'this' as the parent component
+	    dialog.setTitle("Return Detail");
+	    dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+	    JFrameReturnInvoice returnInvoice = new JFrameReturnInvoice(returnLists);
+	    dialog.getContentPane().add(returnInvoice.getContentPane());
+	    dialog.pack();
+	    dialog.setResizable(false);
+	    dialog.setLocationRelativeTo(null);
+	    dialog.setVisible(true);
+		System.out.println("success");
+	}
+
+	// check if email already exist
+	private void textFieldEmail_focusLost(FocusEvent e) {
+		if (JFrameCustomer.isValidEmail(textFieldEmail.getText())) {
+			String email = textFieldEmail.getText();
+			Customers customer = customerModel.findByEmail(email);
+			if (customer == null) {
+				JOptionPane.showMessageDialog(null, "This email is not registed!");
+				lblCustomer.setVisible(false);
+				textFieldCustomer.setVisible(false);
+				textFieldCustomer.setText(null);
+			} else {
+				lblCustomer.setVisible(true);
+				textFieldCustomer.setVisible(true);
+				textFieldCustomer.setText(customer.getName());
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Invalid Email");
+		}
+	}
+
+	// add new customer
+	private void lblNewCustomer_mouseClicked() {
+		JFrameCustomer customerJFrame = new JFrameCustomer(textFieldEmail.getText());
+		textFieldEmail.setText("");
+
+		dialog = new JDialog();
+		dialog.setTitle("Customer Register");
+		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		dialog.setSize(customerJFrame.getSize());
+		dialog.setResizable(false);
+		dialog.getContentPane().add(customerJFrame.getContentPane());
+
+		// Calculate the center of the screen
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int centerX = (int) (screenSize.getWidth() - dialog.getWidth()) / 2;
+		int centerY = (int) (screenSize.getHeight() - dialog.getHeight()) / 2;
+
+		// Set the dialog's location to the center of the screen
+		dialog.setLocation(centerX, centerY);
+		dialog.setVisible(true);
+	}
+
+	private void btnCancel_actionPerformed(ActionEvent e) {
+		if (invoice != null) {
+			JPanelListInvoice.dispose();
+			return;
+		}
+		JPanelSalesInvoice.dispose();
+	}
+
+	private void btnPay_actionPerformed(ActionEvent e) {
+//		if (invoice != null) {
+//			saveInvoiceDetail();
+//			return;
+//		}
+//		String email = textFieldEmail.getText().trim();
+//		if (email.isEmpty() || !JFrameCustomer.isValidEmail(email) || customerModel.findByEmail(email) == null) {
+//			JOptionPane.showMessageDialog(null, "Invalid or empty email address.");
+//			return; // Prevent further processing if email is invalid or empty
+//		}
+//
+//		createInvoice();
+//
+//		if (message.equalsIgnoreCase("Done!")) {
+//			JOptionPane.showMessageDialog(null, message);
+//			this.dispose();
+//		} else {
+//			JOptionPane.showMessageDialog(null, message);
+//		}
+		test();
 	}
 
 	// Function to create a new Invoice
@@ -316,26 +429,77 @@ public class JFrameInvoiceDetail extends JFrame {
 		Invoice invoice = new Invoice();
 		// Create an instance of the InvoiceModel class to work with invoices
 		InvoiceModel invoiceModel = new InvoiceModel();
+		invoiceId = UUID.randomUUID();
 		try {
-			invoice.setInvoice_id(invoiceId.toString());
-			invoice.setCreated_at(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-			invoice.setDelivery_date(dateChooserDeliveryDate.getDate());
-			invoice.setDelivery_location(textFieldDeliveryLocation.getText());
-			invoice.setNote(textFieldNote.getText());
-			invoice.setPayment_method((Payment_method) comboBoxPaymentMethod.getSelectedItem());
-			invoice.setIs_cancelled(false);
-			invoice.setIs_imported(false);
-			invoice.setSupplier_id(null);
-			invoice.setCustomer_id(null);
-			invoice.setReturn_id(null);
-			invoice.setEmployee_id(1);// not null
-			// Create the invoice in the database
-			invoiceModel.create(invoice);
+			if (!buyProducts.isEmpty()) {
+				// Set various fields of the invoice object
+				invoice.setInvoice_id(invoiceId.toString());
+				invoice.setCreated_at(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+				invoice.setDelivery_date(dateChooserDeliveryDate.getDate());
+				invoice.setDelivery_location(textFieldDeliveryLocation.getText());
+				invoice.setNote(textFieldNote.getText());
+				invoice.setPayment_method((Payment_method) comboBoxPaymentMethod.getSelectedItem());
+				invoice.setIs_cancelled(false);
+				invoice.setIs_imported(false);
+				invoice.setSupplier_id(null);
+				invoice.setCustomer_id(customerModel.findByEmail(textFieldEmail.getText()).getId());
+				invoice.setIs_returned(null);
+				invoice.setEmployee_id(JFrameDashBoard.getEmployeeId());// set employeeid later
+				// Create the invoice in the database
+
+				if (invoiceModel.create(invoice)) {
+					createInvoiceDetail();
+				} else {
+					JOptionPane.showMessageDialog(null, "Create Invoice Failed!");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "NO ITEM!");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// Set various fields of the invoice object
+	}
 
+	// Function to create a new Invoice Detail
+	private void createInvoiceDetail() {
+		// Create an instance of Invoice_detail and invoice_detail_model
+		InvoiceDetailModel invoiceDetailModel = new InvoiceDetailModel();
+		// set attribute of invoice detail per row
+		for (int i = 0; i < tableBuyItem.getRowCount(); i++) {
+			String product_code = (String) tableBuyItem.getValueAt(i,
+					getColumnIndexByName(tableBuyItem, "productCode"));
+			double product_price = (double) tableBuyItem.getValueAt(i,
+					getColumnIndexByName(tableBuyItem, "Price (VND)"));
+			double product_quantity = (double) tableBuyItem.getValueAt(i,
+					getColumnIndexByName(tableBuyItem, "Quantity"));
+			int product_Discount = (int) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Discount (%)"));
+			Invoice_detail invoiceDetail = new Invoice_detail();
+
+			invoiceDetail.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
+			invoiceDetail.setProduct_price(product_price);
+			invoiceDetail.setDiscount_percent(product_Discount);
+			invoiceDetail.setProduct_quantity(product_quantity);
+			invoiceDetail.setReturned(false);
+			invoiceDetail.setIs_discount(product_Discount > 0 ? true : false);
+			invoiceDetail.setProduct_code(product_code);
+			invoiceDetail.setInvoice_id(invoiceId.toString());
+			// add to database
+			if (invoiceDetailModel.create(invoiceDetail)) {
+				ProductModel productModel = new ProductModel();
+				if (productModel.findById(product_code).getQuantity() - product_quantity < 0) {
+					JOptionPane.showMessageDialog(null, "Not Enough Stock!");
+				} else {
+					productModel.updateQuantity(productModel.findById(product_code).getQuantity() - product_quantity,
+							product_code);
+				}
+
+				message = "Done!";
+			} else {
+				message = "Failed!";
+
+			}
+		}
 	}
 
 	// Function to get the column index by column name in a JTable
@@ -348,68 +512,109 @@ public class JFrameInvoiceDetail extends JFrame {
 		return -1;// Return -1 if the column name is not found
 	}
 
-	// Function to get a concatenated string value of a specific column in a JTable
-	private String getStringValue(String columnName, JTable tableModel) {
-		int columnIndex = getColumnIndexByName(tableModel, columnName);
-		if (columnIndex != -1) {
-			StringBuilder result = new StringBuilder();
-			// Iterate through the rows of the table
-			for (int row = 0; row < tableModel.getRowCount(); row++) {
-				Object cellValue = tableModel.getValueAt(row, columnIndex);
-				result.append(cellValue);
-
-				if (row < tableModel.getRowCount() - 1) {
-					result.append(", "); // Separate values with a comma and space
-				}
-			}
-
-			return result.toString();// Return the concatenated string
-		} else {
-			return ""; // Column not found
-		}
-	}
-
-	// Function to get an array of double values from a specific column in a JTable
-	private double[] getDoubleValue(String columnName, JTable tableModel) {
-		int columnIndex = getColumnIndexByName(tableModel, columnName);
-
-		if (columnIndex != -1) {
-			int rowCount = tableModel.getRowCount();
-			double[] quantityValues = new double[rowCount];
-
-			for (int row = 0; row < rowCount; row++) {
-				Object cellValue = tableModel.getValueAt(row, columnIndex);
-				quantityValues[row] = (Double) cellValue;
-			}
-			return quantityValues; // Return the array of double values
-		} else {
-			return null; // Return null if the column is not found
-		}
-	}
-
 	// Function to populate data into the JTable
-	private void fillDataToTable() {
+	private void fillDataToTable(List<Invoice_detail> buyProducts) {
+		ProductModel productModel = new ProductModel();
 		// Create a new DefaultTableModel and Add columns to the model
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("Name");
-		model.addColumn("Price");
-		model.addColumn("Quantity");
-		model.addColumn("Discount");
-		model.addColumn("Total");
+		DefaultTableModel model = new DefaultTableModel() {
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				// Return the appropriate column class, including Boolean for the "Option"
+				// column
+				if (columnIndex == getColumnIndexByName(tableBuyItem, "Return")) {
+					return Boolean.class;
+				}
+				return super.getColumnClass(columnIndex);
+			}
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// Make only the "Option" column editable
+				return column == getColumnIndexByName(tableBuyItem, "Return");
+			}
+		};
+
 		model.addColumn("productCode");
-		// Iterate through the BuyProductInfo items and add rows to the model
-		for (BuyProductInfo item : buyProducts) {
-			model.addRow(new Object[] { item.getBuyProductName(), item.getPrice(), item.getQuantity(),
-					item.getDiscount(), item.getPrice() * item.getQuantity(), item.getBuyProductId() });
+		model.addColumn("Name");
+		model.addColumn("Price (VND)");
+		model.addColumn("Quantity");
+		model.addColumn("Discount (%)");
+		model.addColumn("Total");
+		// hide
+		if (invoice != null) {
+			model.addColumn("id");
+			model.addColumn("InvoiceId");
+			model.addColumn("isDiscount");
+			model.addColumn("isReturn");
+			model.addColumn("Created");
+			model.addColumn("Return");
+			for (Invoice_detail item : buyProducts) {
+				double result;
+				if (item.getDiscount_percent() > 0) {
+					result = item.getProduct_quantity() * item.getProduct_price() * (100 - item.getDiscount_percent())
+							/ 100;
+				} else {
+					result = item.getProduct_quantity() * item.getProduct_price();
+				}
+
+				model.addRow(
+						new Object[] { item.getProduct_code(), productModel.findById(item.getProduct_code()).getName(),
+								item.getProduct_price(), item.getProduct_quantity(), item.getDiscount_percent(), result,
+								item.getId(), item.getInvoice_id(), item.isIs_discount(), item.isReturned(),
+								item.getCreated_at(), false });
+			}
+		} else {
+			// Iterate through the BuyProductInfo items and add rows to the model
+			for (Invoice_detail item : buyProducts) {
+				double result;
+				if (item.getDiscount_percent() > 0) {
+					result = item.getProduct_quantity() * item.getProduct_price() * (100 - item.getDiscount_percent())
+							/ 100;
+				} else {
+					result = item.getProduct_quantity() * item.getProduct_price();
+				}
+				model.addRow(new Object[] { item.getProduct_code(),
+						productModel.findById(item.getProduct_code()).getName(), item.getProduct_price(),
+						item.getProduct_quantity(), item.getDiscount_percent(), result });
+			}
 		}
+
 		// Set the model as the data source for the table
 		tableBuyItem.setModel(model);
 		tableBuyItem.getTableHeader().setReorderingAllowed(false);
 
 		// Hide the product_Code column by setting its width to zero
-		tableBuyItem.getColumnModel().getColumn(5).setMinWidth(0);
-		tableBuyItem.getColumnModel().getColumn(5).setMaxWidth(0);
-		tableBuyItem.getColumnModel().getColumn(5).setWidth(0);
+		hideColumn(getColumnIndexByName(tableBuyItem, "productCode"));
+		if (invoice != null) {
+			hideColumn(getColumnIndexByName(tableBuyItem, "id"));
+			hideColumn(getColumnIndexByName(tableBuyItem, "InvoiceId"));
+			hideColumn(getColumnIndexByName(tableBuyItem, "isReturn"));
+			hideColumn(getColumnIndexByName(tableBuyItem, "isDiscount"));
+			tableBuyItem.getColumnModel().getColumn(getColumnIndexByName(tableBuyItem, "Return"))
+					.setCellRenderer(new CheckBoxRenderer());
+			tableBuyItem.getColumnModel().getColumn(getColumnIndexByName(tableBuyItem, "Return"))
+					.setCellEditor(new DefaultCellEditor(new JCheckBox()));
+		}
+
+	}
+
+	// Custom cell renderer for checkboxes
+	private class CheckBoxRenderer extends DefaultTableCellRenderer {
+		private final JCheckBox checkBox = new JCheckBox();
+
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			if (value instanceof Boolean) {
+				checkBox.setSelected((Boolean) value);
+			}
+			return checkBox;
+		}
+	}
+
+	private void hideColumn(int columnIndex) {
+		tableBuyItem.getColumnModel().getColumn(columnIndex).setMinWidth(0);
+		tableBuyItem.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
+		tableBuyItem.getColumnModel().getColumn(columnIndex).setWidth(0);
 	}
 
 	// Function to calculate and display the subtotal of the items in the table
@@ -417,9 +622,54 @@ public class JFrameInvoiceDetail extends JFrame {
 		double subTotal = 0;
 		int rowCount = tableBuyItem.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
-			subTotal += (double) tableBuyItem.getValueAt(i, 4);
+			subTotal += (double) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Total"));
 		}
 		textFieldSubTotal.setText(String.valueOf(subTotal));
+	}
+
+	private void saveInvoiceDetail() {
+		for (int i = 0; i < tableBuyItem.getRowCount(); i++) {
+			boolean isReturned = (boolean) tableBuyItem.getValueAt(i, getColumnIndexByName(tableBuyItem, "Return"));
+			if (isReturned) {
+				System.out.println("true");
+			}
+		}
+		System.out.println("success");
+	}
+
+	private void setReadable(Invoice invoice) {
+		if (invoice != null) {
+			textFieldEmail.setText(customerModel.findById(invoice.getCustomer_id()).getEmail());
+			textFieldEmail.setEnabled(false);
+
+			lblNewCustomer.setVisible(false);
+
+			lblCustomer.setVisible(true);
+			textFieldCustomer.setText(customerModel.findById(invoice.getCustomer_id()).getName());
+			textFieldCustomer.setVisible(true);
+			textFieldCustomer.setEnabled(false);
+
+			dateChooserDeliveryDate.setDate(invoice.getDelivery_date());
+			dateChooserDeliveryDate.setEnabled(false);
+			JTextFieldDateEditor textFieldDateEditor = (JTextFieldDateEditor) dateChooserDeliveryDate.getDateEditor();
+			textFieldDateEditor.setEnabled(false);
+
+			textFieldDeliveryLocation.setText(invoice.getDelivery_location());
+			textFieldDeliveryLocation.setEnabled(false);
+
+			textFieldNote.setText(invoice.getNote());
+			textFieldNote.setEnabled(false);
+
+			comboBoxPaymentMethod.setSelectedItem(invoice.getPayment_method());
+			comboBoxPaymentMethod.setBackground(Color.GREEN);
+			comboBoxPaymentMethod.setEnabled(false);
+
+			btnPay.setText("Save");
+		}
+	}
+
+	public static void disposeCustomerRegister() {
+		dialog.dispose();
 	}
 
 }

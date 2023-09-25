@@ -28,7 +28,7 @@ public class JPanelInvoices extends JPanel {
 		FlowLayout fl_panel = new FlowLayout(FlowLayout.CENTER, 15, 5);
 		panel.setLayout(fl_panel);
 
-		JButton jbtnSales = new JButton("SALES");
+		JButton jbtnSales = new JButton("ADD");
 		jbtnSales.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbtnSales_actionPerformed(e);
@@ -37,15 +37,12 @@ public class JPanelInvoices extends JPanel {
 		jbtnSales.setPreferredSize(new Dimension(80, 25));
 		panel.add(jbtnSales);
 		
-		JButton jbtnReturn = new JButton("RETURN");
-		jbtnReturn.setPreferredSize(new Dimension(80, 25));
-		panel.add(jbtnReturn);
-		
-		JButton jbtnImport = new JButton("IMPORT");
-		jbtnImport.setPreferredSize(new Dimension(80, 25));
-		panel.add(jbtnImport);
-		
 		JButton jbtnList = new JButton("LIST");
+		jbtnList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbtnList_actionPerformed(e);
+			}
+		});
 		jbtnList.setPreferredSize(new Dimension(80, 25));
 		panel.add(jbtnList);
 		
@@ -53,6 +50,13 @@ public class JPanelInvoices extends JPanel {
 		add(jpanelContent, BorderLayout.CENTER);
 		jpanelContent.setLayout(new BorderLayout(0, 0));
 
+	}
+	
+	public void jbtnList_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelListInvoice panelList = new JPanelListInvoice();
+		panelList.setVisible(true);
+		jpanelContent.add(panelList);
 	}
 	
 	public void jbtnSales_actionPerformed(ActionEvent e) {

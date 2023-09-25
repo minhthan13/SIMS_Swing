@@ -1,10 +1,6 @@
 package Models.CSS;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 
 public class StyleColor {
 	public static Color FormColor() {
